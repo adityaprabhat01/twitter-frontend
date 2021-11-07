@@ -18,7 +18,6 @@ const TweetList = () => {
   }
 
   useEffect(() => {
-    console.log(params)
     if(isParams(params)) {
       fetch(URL + 'ownTweets', {
         method: 'POST',
