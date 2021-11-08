@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react'
 import TweetArea from '../Tweet/ TweetArea';
 import TweetList from '../Tweet/TweetList';
 import { useSelector, RootStateOrAny, useDispatch } from 'react-redux';
-import { useParams } from 'react-router';
+import { useParams, useHistory } from 'react-router';
 import Follow from './Follow';
 import { URL } from '../../url';
 import { fetchProfile, fetchProfileFailure, fetchProfileSuccess } from '../../store/profile/profileAction';
+import { Link } from 'react-router-dom';
 
 const Profile = () => {
   const x = useSelector((state: RootStateOrAny) => state)
@@ -13,6 +14,9 @@ const Profile = () => {
   const dispatch = useDispatch()
   const [ownProfile, setOwnProfile] = useState(true);
   let ownProfileStatus = false;
+  const history = useHistory()
+  let name = ''
+  let user_name = ''
 
   useEffect(() => {
     type Params = { user_name: string };
@@ -20,8 +24,7 @@ const Profile = () => {
     function isParams(params: Params | NoParams): params is Params {
       return (params as Params).user_name !== undefined;
     }
-    if(isParams(params) && x.auth.user_name !== params.user_name)  {
-      console.log(params.user_name)
+    if(isParams(params))  {
       dispatch(fetchProfile())
       fetch(URL + 'search', {
         method: 'POST',
@@ -47,7 +50,12 @@ const Profile = () => {
       .catch(err => dispatch(fetchProfileFailure()))
       
     }
-  }, [ownProfileStatus])
+  }, [history.location.pathname])
+  
+  function handleRahul() {
+    
+    history.push("/profile/rahulsingh")
+  }
 
   return (
     <div>
@@ -55,10 +63,12 @@ const Profile = () => {
       {
         ownProfile === false ? <Follow /> : null
       }
-      { x.auth.name }
-      { x.auth.user_name }
+
+      { x.profile.name }
+      { x.profile.user_name }
       <TweetArea />
       <TweetList />
+      <button onClick={handleRahul}>Rahul</button>
     </div>
   )
 }

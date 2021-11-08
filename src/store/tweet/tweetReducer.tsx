@@ -23,7 +23,11 @@ const tweetReducer = (state = initState, action: {
   switch(action.type) {
     case POST_TWEET: return {
       ...state,
-      loading: true
+      loading: true,
+      tweet_data: [{
+        tweet: '',
+        tweet_id: '',
+      }],
     }
     case POST_TWEET_SUCCESS: return {
       ...state,

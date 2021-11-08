@@ -3,14 +3,14 @@ import { RootStateOrAny, useSelector, useDispatch } from "react-redux";
 import { fetchTweets, fetchTweetsSuccess, fetchTweetsFailure } from '../../store/tweet/tweetAction'
 import { URL } from "../../url";
 import Tweet from "./Tweet";
-import { useParams } from "react-router";
+import { useParams, useHistory } from "react-router";
 
 const TweetList = () => {
   let fetched = false;
   const x = useSelector((state: RootStateOrAny) => state)
   const dispatch = useDispatch()
   const params = useParams()
-  
+  const history = useHistory()
   type NoParams = {}
   type Params = { user_name: string }
   function isParams(params: Params | NoParams): params is Params {
@@ -25,7 +25,7 @@ const TweetList = () => {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          user_id: x.auth.user_id,
+          user_id: x.auth.user_name === params.user_name ? x.auth.user_id : '',
           user_name: params.user_name
         })
       })
@@ -37,7 +37,7 @@ const TweetList = () => {
       .catch(err => console.log(err))
     }
     
-  }, [fetched])
+  }, [history.location.pathname])
   
   return (
     <div>
