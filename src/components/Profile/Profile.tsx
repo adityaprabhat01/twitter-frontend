@@ -54,7 +54,7 @@ const Profile = () => {
   
   function handleRahul() {
     
-    history.push("/profile/rahulsingh")
+    history.push("/profile/adityasingh")
   }
 
   return (

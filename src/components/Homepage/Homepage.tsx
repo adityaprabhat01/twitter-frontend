@@ -1,8 +1,12 @@
 import React from "react";
+import HomeTweetList from "../Tweet/HomeTweetList";
 
 const Homepage = () => {
   return (
-    <div>Homepage</div>
+    <div>
+      Homepage
+      <HomeTweetList />
+    </div>
   )
 };    
 

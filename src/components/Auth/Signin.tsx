@@ -42,7 +42,7 @@ const SignIn = () => {
         name
       }
       dispatch(signInAction(data))
-      history.push('/profile/' + user_name)
+      history.push('/homepage')
     })
     .catch(err => console.log(err))
   }
