@@ -1,7 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useSelector, RootStateOrAny, useDispatch } from "react-redux";
-import { homeFetchTweets, homeFetchTweetsSuccess, homeLikedTweets } from "../../store/home/homeAction";
-import { fetchProfileSuccess } from "../../store/profile/profileAction";
+import { homeFetchTweets, homeFetchTweetsSuccess, homeLikedTweets, homeRetweetedTweets } from "../../store/home/homeAction";
 import { URL } from "../../url";
 import Tweet from "./Tweet";
 
@@ -10,36 +9,59 @@ const HomeTweetList = () => {
   const dispatch = useDispatch();
   let fetched = false;
 
-  function mapToObject(tweets) {
+  function mapToObject(tweets, type) {
     let obj = {}
-    tweets.map(tweet => {
-      let temp = {
-        tweet_id: tweet.tweet_id,
-        liked: true
-      }
-      
-      obj[tweet.tweet_id] = temp;
-    })
+    if(type === 'liked') {
+      tweets.map(tweet => {
+        let temp = {
+          tweet_id: tweet.tweet_id,
+          liked: true,
+        }
+        obj[tweet.tweet_id] = temp;
+      })
+    }
+    else if(type === 'retweeted') {
+      tweets.map(tweet => {
+        let temp = {
+          tweet_id: tweet.tweet_id,
+          retweeted: true,
+        }
+        obj[tweet.tweet_id] = temp;
+      })
+    }
     return obj;
   }
 
   useEffect(() => {
     dispatch(homeFetchTweets());
 
-    fetch(URL + 'allLiked', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        user_id: x.auth.user_id
+    Promise.all([
+      fetch(URL + 'allLiked', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          user_id: x.auth.user_id
+        })
+      }),
+      fetch(URL + 'allRetweeted', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          user_id: x.auth.user_id
+        })
       })
-    })
-    .then(res => res.json())
-    .then(res => {
-      console.log(res)
-      const obj = mapToObject(res);
-      dispatch(homeLikedTweets(obj))
+    ])
+    .then(responses =>
+        Promise.all(responses.map(res => res.json()))
+      ).then(res => {
+        const obj_liked = mapToObject(res[0], 'liked')
+        const obj_retweeted = mapToObject(res[1], 'retweeted')
+        dispatch(homeLikedTweets(obj_liked));
+        dispatch(homeRetweetedTweets(obj_retweeted));
     })
     .catch(err => {
       console.log(err)

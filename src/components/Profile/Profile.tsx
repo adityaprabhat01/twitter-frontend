@@ -5,7 +5,7 @@ import { useSelector, RootStateOrAny, useDispatch } from 'react-redux';
 import { useParams, useHistory } from 'react-router';
 import Follow from './Follow';
 import { URL } from '../../url';
-import { fetchProfile, fetchProfileFailure, fetchProfileSuccess } from '../../store/profile/profileAction';
+import { fetchProfile, fetchProfileFailure, fetchProfileSuccess, setFollowing } from '../../store/profile/profileAction';
 import { Link } from 'react-router-dom';
 
 const Profile = () => {
@@ -37,7 +37,6 @@ const Profile = () => {
       })
       .then(res => res.json())
       .then(res => {
-        console.log(res);
         const { user_id, username, name } = res;
         const data = {
           user_id,
@@ -46,6 +45,26 @@ const Profile = () => {
         }
         dispatch(fetchProfileSuccess(data))
         setOwnProfile(false)
+
+        fetch(URL + 'checkFollow', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            follower_id: x.auth.user_id,
+            following_id: user_id
+          })
+        })
+        .then(res => res.json())
+        .then(res => {
+          console.log(res)
+          if(res.length !== 0) {
+            dispatch(setFollowing(true))
+          } else {
+            dispatch(setFollowing(false))
+          }
+        })
       })
       .catch(err => dispatch(fetchProfileFailure()))
       

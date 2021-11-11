@@ -1,4 +1,4 @@
-import { HOME_FETCH_TWEETS, HOME_FETCH_TWEETS_SUCCESS, HOME_FETCH_TWEETS_FAILURE, HOME_LIKED_TWEETES, HOME_ADD_LIKED_TWEETS, HOME_REMOVE_LIKED_TWEETS } from "./homeType";
+import { HOME_FETCH_TWEETS, HOME_FETCH_TWEETS_SUCCESS, HOME_FETCH_TWEETS_FAILURE, HOME_ADD_LIKED_TWEETS, HOME_REMOVE_LIKED_TWEETS, HOME_LIKED_TWEETES, HOME_RETWEETED_TWEETES, HOME_ADD_RETWEETED_TWEETS, HOME_REMOVE_RETWEETED_TWEETS } from "./homeType";
 
 export const homeFetchTweets = () => {
   return {
@@ -36,6 +36,27 @@ export const homeAddLikedTweets = (data) => {
 export const homeRemoveLikedTweets = (data) => {
   return {
     type: HOME_REMOVE_LIKED_TWEETS,
+    payload: data
+  }
+}
+
+export const homeRetweetedTweets = (data) => {
+  return {
+    type: HOME_RETWEETED_TWEETES,
+    payload: data
+  }
+}
+
+export const homeAddRetweetedTweets = (data) => {
+  return {
+    type: HOME_ADD_RETWEETED_TWEETS,
+    payload: data
+  }
+}
+
+export const homeRemoveRetweetedTweets = (data) => {
+  return {
+    type: HOME_REMOVE_RETWEETED_TWEETS,
     payload: data
   }
 }

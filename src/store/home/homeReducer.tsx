@@ -1,4 +1,4 @@
-import { HOME_FETCH_TWEETS, HOME_FETCH_TWEETS_SUCCESS, HOME_FETCH_TWEETS_FAILURE, HOME_LIKED_TWEETES, HOME_ADD_LIKED_TWEETS, HOME_REMOVE_LIKED_TWEETS } from "./homeType";
+import { HOME_FETCH_TWEETS, HOME_FETCH_TWEETS_SUCCESS, HOME_FETCH_TWEETS_FAILURE, HOME_ADD_LIKED_TWEETS, HOME_REMOVE_LIKED_TWEETS, HOME_LIKED_TWEETES, HOME_RETWEETED_TWEETES, HOME_ADD_RETWEETED_TWEETS, HOME_REMOVE_RETWEETED_TWEETS } from "./homeType";
 
 const initState = {
   tweets: [{
@@ -14,7 +14,8 @@ const initState = {
   }],
   loading: false,
   error: '',
-  liked: {}
+  liked: {},
+  retweeted: {}
 }
 
 const homeReducer = (state = initState, action) => {
@@ -43,8 +44,20 @@ const homeReducer = (state = initState, action) => {
     }
     case HOME_REMOVE_LIKED_TWEETS:
       let newState = { ...state };
-      delete newState.liked[action.payload];
+      delete newState.liked[action.payload]
       return newState;
+    case HOME_RETWEETED_TWEETES: return {
+      ...state,
+      retweeted: action.payload
+    }
+    case HOME_ADD_RETWEETED_TWEETS: return {
+      ...state,
+      retweeted: { ...state.retweeted, [action.payload.tweet_id]: action.payload }
+    }
+    case HOME_REMOVE_RETWEETED_TWEETS:
+      let newState_1 = { ...state };
+      delete newState_1.retweeted[action.payload]
+      return newState_1;
     default: return state;
   }
 }

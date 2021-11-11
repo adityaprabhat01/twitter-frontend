@@ -1,4 +1,5 @@
 import Like from "../Like/Like";
+import Retweet from "../Retweet/Retweet";
 
 const Tweet = (props: any) => {
   const { tweet } = props;
@@ -6,6 +7,7 @@ const Tweet = (props: any) => {
     <div>
       { tweet.tweet }
       <Like tweet={tweet} />
+      <Retweet tweet={tweet} />
     </div>
   )
 }

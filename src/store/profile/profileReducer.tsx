@@ -1,11 +1,12 @@
-import { FETCH_PROFILE, FETCH_PROFILE_SUCCESS, FETCH_PROFILE_FAILURE } from "./profileType"
+import { FETCH_PROFILE, FETCH_PROFILE_SUCCESS, FETCH_PROFILE_FAILURE, SET_FOLLOWING } from "./profileType"
 
 const initState = {
   user_id: '',
   user_name: '',
   loading: '',
   error: '',
-  name: ''
+  name: '',
+  following: false
 }
 
 const profileReducer = (state = initState, action: { type: string; payload: { user_id: string; user_name: string; name: string; error: string, loading: boolean } }) => {
@@ -25,6 +26,10 @@ const profileReducer = (state = initState, action: { type: string; payload: { us
       ...state,
       loading: false,
       error: action.payload.error
+    }
+    case SET_FOLLOWING: return {
+      ...state,
+      following: action.payload
     }
     default: return state;
   }
