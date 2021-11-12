@@ -89,7 +89,8 @@ const HomeTweetList = () => {
           retweet_count,
           name,
           email,
-          username
+          username,
+          author_id
       } = val
       const y = {
           following_id,
@@ -100,7 +101,8 @@ const HomeTweetList = () => {
           retweet_count,
           name,
           email,
-          username
+          username,
+          author_id
       }
         data.push(y)
       })

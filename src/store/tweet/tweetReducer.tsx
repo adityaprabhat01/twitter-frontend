@@ -1,8 +1,11 @@
-import React from "react";
 import { POST_TWEET, POST_TWEET_FAILURE, POST_TWEET_SUCCESS, FETCH_TWEETS, FETCH_TWEETS_SUCCESS, FETCH_TWEETS_FAILURE } from "./tweetTypes";
 
 const initState = {
   tweet_data: [{
+    tweet: '',
+    tweet_id: '',
+  }],
+  retweet_data: [{
     tweet: '',
     tweet_id: '',
   }],
@@ -24,10 +27,6 @@ const tweetReducer = (state = initState, action: {
     case POST_TWEET: return {
       ...state,
       loading: true,
-      tweet_data: [{
-        tweet: '',
-        tweet_id: '',
-      }],
     }
     case POST_TWEET_SUCCESS: return {
       ...state,

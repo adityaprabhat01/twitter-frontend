@@ -5,7 +5,7 @@ import { homeAddLikedTweets, homeRemoveLikedTweets } from "../../store/home/home
 const Like = (props) => {
   const x = useSelector((state: RootStateOrAny) => state)
   const { tweet } = props
-  const { following_id, tweet_id } = tweet
+  const { following_id, tweet_id, author_id } = tweet
   const likedStatus = x.home.liked;
   const dispatch = useDispatch()
 
@@ -17,7 +17,7 @@ const Like = (props) => {
       },
       body: JSON.stringify({
         user_id: x.auth.user_id,
-        author_id: following_id === undefined ? x.profile.user_id : following_id,
+        author_id,
         tweet_id
       })
     })
@@ -43,7 +43,7 @@ const Like = (props) => {
       },
       body: JSON.stringify({
         user_id: x.auth.user_id,
-        author_id: following_id === undefined ? x.profile.user_id : following_id,
+        author_id,
         tweet_id: tweet_id
       })
     })

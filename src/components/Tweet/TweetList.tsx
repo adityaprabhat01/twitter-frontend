@@ -19,24 +19,43 @@ const TweetList = () => {
 
   useEffect(() => {
     if(isParams(params)) {
-      fetch(URL + 'ownTweets', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          user_id: x.auth.user_name === params.user_name ? x.auth.user_id : '',
-          user_name: params.user_name
+
+      Promise.all([
+        fetch(URL + 'ownTweets', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            user_id: x.auth.user_name === params.user_name ? x.auth.user_id : '',
+            user_name: params.user_name
+          })
+        }),
+
+        fetch(URL + 'ownRetweetedTweets', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            user_id: x.auth.user_name === params.user_name ? x.auth.user_id : '',
+            user_name: params.user_name
+          })
         })
-      })
-      .then(res => res.json())
+      ])
+      .then(responses =>
+        Promise.all(responses.map(res => res.json()))
+      )
       .then(res => {
-        dispatch(fetchTweetsSuccess(res))
-        fetched = true;
+        for(let i=0;i<res[1].length;i++) {
+          res[0].push(res[1][i])
+        }
+        dispatch(fetchTweetsSuccess(res[0]));
       })
-      .catch(err => console.log(err))
+      .catch(err => {
+        console.log(err)
+      })
     }
-    
   }, [history.location.pathname])
   
   return (

@@ -5,7 +5,7 @@ import { homeAddRetweetedTweets, homeRemoveRetweetedTweets } from "../../store/h
 const Retweet = (props) => {
   const x = useSelector((state: RootStateOrAny) => state)
   const { tweet } = props;
-  const { following_id, tweet_id } = tweet;
+  const { following_id, tweet_id, author_id } = tweet;
   const retweetedStatus = x.home.retweeted
   const dispatch = useDispatch();
   function handleRetweet() {
@@ -16,8 +16,8 @@ const Retweet = (props) => {
       },
       body: JSON.stringify({
         user_id: x.auth.user_id,
-        author_id: following_id === undefined ? x.profile.user_id : following_id,
-        tweet_id: tweet_id
+        author_id: author_id,
+        tweet_id
       })
     })
     .then(res => res.json())
@@ -43,15 +43,14 @@ const Retweet = (props) => {
       },
       body: JSON.stringify({
         user_id: x.auth.user_id,
-        author_id: following_id === undefined ? x.profile.user_id : following_id,
-        tweet_id: tweet_id
+        author_id: author_id,
+        tweet_id
       })
     })
     .then(res => res.json())
     .then(res => {
       const { tweet_id, status } = res;
       dispatch(homeRemoveRetweetedTweets(tweet_id))
-      console.log(res);
     })
     .catch(err => {
       console.log(err)

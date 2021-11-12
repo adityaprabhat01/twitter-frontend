@@ -10,7 +10,8 @@ const initState = {
     retweet_count: '',
     name: '',
     email: '',
-    username: ''
+    username: '',
+    author_id: ''
   }],
   loading: false,
   error: '',

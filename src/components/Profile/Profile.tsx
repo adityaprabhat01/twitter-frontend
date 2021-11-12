@@ -15,8 +15,6 @@ const Profile = () => {
   const [ownProfile, setOwnProfile] = useState(true);
   let ownProfileStatus = false;
   const history = useHistory()
-  let name = ''
-  let user_name = ''
 
   useEffect(() => {
     type Params = { user_name: string };
@@ -25,6 +23,9 @@ const Profile = () => {
       return (params as Params).user_name !== undefined;
     }
     if(isParams(params))  {
+      if(x.auth.user_name === params.user_name) {
+        setOwnProfile(false)
+      }
       dispatch(fetchProfile())
       fetch(URL + 'search', {
         method: 'POST',
@@ -44,7 +45,7 @@ const Profile = () => {
           name
         }
         dispatch(fetchProfileSuccess(data))
-        setOwnProfile(false)
+        
 
         fetch(URL + 'checkFollow', {
           method: 'POST',
@@ -70,7 +71,6 @@ const Profile = () => {
       
     }
   }, [history.location.pathname])
-  
   function handleRahul() {
     
     history.push("/profile/adityasingh")
@@ -80,11 +80,12 @@ const Profile = () => {
     <div>
       Profile
       {
-        ownProfile === false ? <Follow /> : null
+        ownProfile === false ? <><Follow /></>  : <></>
       }
 
       { x.profile.name }
       { x.profile.user_name }
+
       <TweetArea />
       <TweetList />
       <button onClick={handleRahul}>Rahul</button>
