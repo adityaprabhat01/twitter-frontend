@@ -7,6 +7,7 @@ import Follow from './Follow';
 import { URL } from '../../url';
 import { fetchProfile, fetchProfileFailure, fetchProfileSuccess, setFollowing } from '../../store/profile/profileAction';
 import { Link } from 'react-router-dom';
+import SearchBar from '../SearchBar/SearchBar';
 
 const Profile = () => {
   const x = useSelector((state: RootStateOrAny) => state)
@@ -71,14 +72,12 @@ const Profile = () => {
       
     }
   }, [history.location.pathname])
-  function handleRahul() {
-    
-    history.push("/profile/adityasingh")
-  }
+
 
   return (
     <div>
       Profile
+      <SearchBar />
       {
         ownProfile === false ? <><Follow /></>  : <></>
       }
@@ -88,7 +87,6 @@ const Profile = () => {
 
       <TweetArea />
       <TweetList />
-      <button onClick={handleRahul}>Rahul</button>
     </div>
   )
 }
