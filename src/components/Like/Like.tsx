@@ -1,6 +1,7 @@
 import { URL } from "../../url";
 import { useSelector, RootStateOrAny, useDispatch } from "react-redux";
 import { homeAddLikedTweets, homeRemoveLikedTweets } from "../../store/home/homeAction";
+import { Button } from "@chakra-ui/react";
 
 const Like = (props) => {
   const x = useSelector((state: RootStateOrAny) => state)
@@ -61,10 +62,10 @@ const Like = (props) => {
     <>
       {
         likedStatus[tweet.tweet_id] === undefined ? 
-          <button onClick={handleLike}>
+          <Button onClick={handleLike}>
             Like
-          </button> :
-          <button onClick={handleUnlike}>Unlike</button>
+          </Button> :
+          <Button onClick={handleUnlike}>Unlike</Button>
       }
     </>
   )

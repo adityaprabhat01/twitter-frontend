@@ -4,6 +4,7 @@ import { fetchTweets, fetchTweetsSuccess, fetchTweetsFailure } from '../../store
 import { URL } from "../../url";
 import Tweet from "./Tweet";
 import { useParams, useHistory } from "react-router";
+import { Box, Center, Container, Stack, StackDivider } from "@chakra-ui/layout";
 
 const TweetList = () => {
   let fetched = false;
@@ -59,15 +60,17 @@ const TweetList = () => {
   }, [history.location.pathname])
   
   return (
-    <div>
-      TweetList
-      {
-        x.tweet.tweet_data.map(tweet => {
-          return <Tweet tweet={tweet} />
-        })
-      }
-      
-    </div>
+    <>
+        <Stack alignItems={"center"} spacing={4}>
+          TweetList
+            {
+              x.tweet.tweet_data.map(tweet => {
+                return <Tweet tweet={tweet} />
+              })
+            }      
+        </Stack>
+    </>
+    
   )
 }
 

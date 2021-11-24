@@ -60,7 +60,6 @@ const Profile = () => {
         })
         .then(res => res.json())
         .then(res => {
-          console.log(res)
           if(res.length !== 0) {
             dispatch(setFollowing(true))
           } else {

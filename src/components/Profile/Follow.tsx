@@ -1,4 +1,3 @@
-import React from "react";
 import { URL } from "../../url";
 import { useSelector, RootStateOrAny, useDispatch } from "react-redux";
 import { setFollowing } from "../../store/profile/profileAction";

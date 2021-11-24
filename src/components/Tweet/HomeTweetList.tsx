@@ -1,3 +1,4 @@
+import { Stack } from "@chakra-ui/layout";
 import { useEffect } from "react";
 import { useSelector, RootStateOrAny, useDispatch } from "react-redux";
 import { homeFetchTweets, homeFetchTweetsSuccess, homeLikedTweets, homeRetweetedTweets } from "../../store/home/homeAction";
@@ -111,14 +112,16 @@ const HomeTweetList = () => {
     })
   }, [fetched])
   return (
-    <div> 
+    <>
       HomeTweets
-      {
-        x.home.tweets.map(tweet => {
-          return <Tweet tweet={tweet} />
-        })
-      }
-    </div>
+      <Stack alignItems={"center"} spacing={4}>
+        {
+          x.home.tweets.map(tweet => {
+            return <Tweet tweet={tweet} />
+          })
+        }
+      </Stack>
+    </>
   )
 }
 

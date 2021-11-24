@@ -1,6 +1,7 @@
 import { URL } from "../../url";
 import { useSelector, RootStateOrAny, useDispatch } from "react-redux";
 import { homeAddRetweetedTweets, homeRemoveRetweetedTweets } from "../../store/home/homeAction";
+import { Button } from "@chakra-ui/react";
 
 const Retweet = (props) => {
   const x = useSelector((state: RootStateOrAny) => state)
@@ -62,10 +63,10 @@ const Retweet = (props) => {
     <>
       {
         retweetedStatus[tweet.tweet_id] === undefined ? 
-          <button onClick={handleRetweet}>
+          <Button onClick={handleRetweet}>
             Retweet
-          </button> :
-          <button onClick={handleUnretweet}>Unretweet</button>
+          </Button> :
+          <Button onClick={handleUnretweet}>Unretweet</Button>
       }
     </>
   )
