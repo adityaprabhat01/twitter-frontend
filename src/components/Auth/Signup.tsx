@@ -1,3 +1,4 @@
+import { Box, Button, Flex, FormControl, FormLabel, Input } from "@chakra-ui/react";
 import React, { useState } from "react";
 
 const SignUp = () => {
@@ -42,27 +43,39 @@ const SignUp = () => {
   }
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="email">Email:</label>
-        <br />
-        <input onChange={handleEmail} type="text" id="email" />
-        <br />
-        <label htmlFor="password">Password:</label>
-        <br />
-        <input onChange={handlePassword} type="text" id="password" />
-        <br />
-        <label htmlFor="name">Name:</label>
-        <br />
-        <input onChange={handleName} type="text" id="name" />
-        <br />
-        <label htmlFor="username">Username:</label>
-        <br />
-        <input onChange={handleUsername} type="text" id="username" />
-        <br />
-        <input type="submit" value="Submit" />
-      </form>
-    </div>
+    <>
+      <Flex align="center" width="full" justifyContent="center">
+        <form onSubmit={handleSubmit}>
+          <Box px={4} py={4} bg={"#EDF2F7"}>
+          <FormControl>
+            <FormLabel htmlFor="email">Email:</FormLabel>
+            <Input placeholder="Email" onChange={handleEmail} type="text" id="email" />
+          </FormControl>
+
+          <FormControl>
+            <FormLabel htmlFor="password">Password:</FormLabel>
+            <Input placeholder="Password" onChange={handlePassword} type="text" id="password" />
+          </FormControl>
+          
+          <FormControl>
+            <FormLabel htmlFor="name">Name:</FormLabel>
+            <Input placeholder="Name" onChange={handleName} type="text" id="name" />
+          </FormControl>
+          
+          <FormControl>
+            <FormLabel htmlFor="username">Username:</FormLabel>
+            <Input placeholder="Username" onChange={handleUsername} type="text" id="username" />
+          </FormControl>
+          
+          <FormControl>
+            <Button bg={"#A0AEC0"} onClick={handleSubmit} mt={4}>Sign Up</Button>
+          </FormControl>
+          </Box>
+          
+          
+        </form>
+      </Flex>
+    </>
   );
 };
 

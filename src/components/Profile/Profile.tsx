@@ -78,13 +78,16 @@ const Profile = () => {
       Profile
       <SearchBar />
       {
-        ownProfile === false ? <><Follow /></>  : <></>
+        x.auth.user_name !== x.profile.user_name ? <Follow />  : null
       }
 
       { x.profile.name }
       { x.profile.user_name }
 
-      <TweetArea />
+      {
+        x.auth.user_name === x.profile.user_name ? <TweetArea />  : null
+      }
+
       <TweetList />
     </div>
   )

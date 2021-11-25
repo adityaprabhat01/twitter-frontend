@@ -1,4 +1,4 @@
-import { FETCH_THREAD, FETCH_THREAD_FAILURE, FETCH_THREAD_SUCCESS } from "./threadType"
+import { FETCH_THREAD, FETCH_THREAD_FAILURE, FETCH_THREAD_SUCCESS, POST_COMMENT_THREAD } from "./threadType"
 
 export const fetchThread = () => {
   return {
@@ -16,5 +16,12 @@ export const fetchThreadSuccess = (data) => {
 export const fetchThreadFailure = () => {
   return {
     type: FETCH_THREAD_FAILURE
+  }
+}
+
+export const postCommentThread = (data) => {
+  return {
+    type: POST_COMMENT_THREAD,
+    payload: data
   }
 }

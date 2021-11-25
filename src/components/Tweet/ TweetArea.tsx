@@ -23,7 +23,9 @@ const TweetArea = () => {
       body: JSON.stringify({
         tweet,
         user_id: x.auth.user_id,
-        author_id: x.auth.user_id
+        author_id: x.auth.user_id,
+        name: x.auth.name,
+        user_name: x.auth.user_name
       })
     })
     .then(res => res.json())

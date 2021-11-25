@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { signInAction, fetchUser } from "../../store/auth/authAction";
 import { useHistory } from "react-router-dom";
+import { Button, Flex, FormControl, Input } from "@chakra-ui/react";
 
 const SignIn = () => {
 
@@ -48,19 +49,23 @@ const SignIn = () => {
   }
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="fname">Email:</label>
-        <br />
-        <input onChange={handleEmail} type="text" id="email" />
-        <br />
-        <label htmlFor="password">Password:</label>
-        <br />
-        <input onChange={handlePassword} type="text" id="password" />
-        <br />
-        <input type="submit" value="Submit" />
-      </form>
-    </div>
+    <>
+      <Flex width="full"  justifyContent="center">
+        <form onSubmit={handleSubmit} >
+          <FormControl>
+            <label htmlFor="fname">Email:</label>
+            <Input placeholder="Email" onChange={handleEmail} type="text" id="email" />
+            </FormControl>
+            <FormControl>
+            <label htmlFor="password">Password:</label>
+            <Input placeholder="Password" onChange={handlePassword} type="text" id="password" />
+            </FormControl>
+            <FormControl>
+            <Button mt={2} onClick={handleSubmit}>Log In</Button>
+            </FormControl>
+        </form>
+      </Flex>
+    </>
   );
 };
 

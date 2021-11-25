@@ -40,21 +40,28 @@ const Follow = () => {
       dispatch(setFollowing(false))
     })
   }
-
+  console.log("Follow")
   return (
     <div>
       {
+        x.profile.following === false ?
+        <button onClick={handleFollow}>Follow</button> :
+        <button onClick={handleUnfollow}>Unfollow</button>
+      }
+      {/* {
         x.auth.user_name !== x.profile.user_name && x.profile.following === false ?
-          <button onClick={handleFollow}>
-            Follow
-          </button> : (
+          (
+            <button onClick={handleFollow}>
+              Follow
+            </button>
+          ) : (
             x.auth.user_name === x.profile.user_name ?
             null :
             <button onClick={handleUnfollow}>
             Unfollow
           </button> 
           )
-      }
+      } */}
       
     </div>
   )

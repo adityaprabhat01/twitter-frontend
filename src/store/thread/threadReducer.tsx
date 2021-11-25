@@ -1,4 +1,4 @@
-import { FETCH_THREAD, FETCH_THREAD_FAILURE, FETCH_THREAD_SUCCESS } from "./threadType"
+import { FETCH_THREAD, FETCH_THREAD_FAILURE, FETCH_THREAD_SUCCESS, POST_COMMENT_THREAD } from "./threadType"
 
 const initState = {
   tweet: {},
@@ -22,6 +22,10 @@ const threadReducer = (state = initState, action) => {
     case FETCH_THREAD_FAILURE: return {
       ...state,
       error: 'error'
+    }
+    case POST_COMMENT_THREAD: return {
+      ...state,
+      comments: [...(state.comments), action.payload]
     }
     default: return state
   }

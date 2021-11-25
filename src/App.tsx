@@ -7,12 +7,13 @@ import SignUp from "./components/Auth/SignUp";
 import SignIn from "./components/Auth/SignIn";
 import Thread from "./components/Thread/Thread";
 import store from "./store/store";
-import { ChakraProvider } from "@chakra-ui/react";
+import { ChakraProvider, CSSReset } from "@chakra-ui/react";
 
 const App = () => {
   return (
     <>
       <ChakraProvider>
+        <CSSReset />
         <Provider store={store}>
             <BrowserRouter>
               <Route exact path="/signup" component={SignUp} />
