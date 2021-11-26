@@ -1,11 +1,13 @@
 import Like from "../Like/Like";
 import Retweet from "../Retweet/Retweet";
 import { Box, Flex } from "@chakra-ui/react"
-import CommentTextArea from "../Comment/CommentTextArea";
 import ThreadButton from "../Button/ThreadButton";
+import DeleteTweet from "./DeleteTweet";
+import Comment from "../Comment/Comment";
+import PostedCommentList from "../Comment/PostedCommentList";
 
 const Tweet = (props: any) => {
-  const { tweet } = props;
+  const { tweet } = props;  
   return (
     <Box border={"2px"} width={"350px"}>
       <span>
@@ -18,10 +20,11 @@ const Tweet = (props: any) => {
       <Flex justifyContent="space-between">
         <Like tweet={tweet} />
         <Retweet tweet={tweet} />
-        <CommentTextArea tweet={tweet} />
+        <Comment tweet={tweet} />
         <ThreadButton tweet={tweet} />
+        <DeleteTweet tweet={tweet} />
       </Flex>
-      
+      <PostedCommentList />
     </Box>
   )
 }

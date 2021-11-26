@@ -12,6 +12,7 @@ const TweetList = () => {
   const dispatch = useDispatch()
   const params = useParams()
   const history = useHistory()
+  const [loading, setLoading] = useState(true)
   type NoParams = {}
   type Params = { user_name: string }
   function isParams(params: Params | NoParams): params is Params {
@@ -52,6 +53,7 @@ const TweetList = () => {
           res[0].push(res[1][i])
         }
         dispatch(fetchTweetsSuccess(res[0]));
+        setLoading(false)
       })
       .catch(err => {
         console.log(err)
@@ -64,6 +66,7 @@ const TweetList = () => {
         <Stack alignItems={"center"} spacing={4}>
           TweetList
             {
+              loading === true ? 'loading' :
               x.tweet.tweet_data.map(tweet => {
                 return <Tweet tweet={tweet} />
               })

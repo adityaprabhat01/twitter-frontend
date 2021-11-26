@@ -1,4 +1,4 @@
-import { Box, Flex } from "@chakra-ui/react"
+import { Box } from "@chakra-ui/react"
 
 const ShowComment = (props) => {
   const { comment } = props

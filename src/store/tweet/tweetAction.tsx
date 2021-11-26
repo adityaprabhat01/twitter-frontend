@@ -1,4 +1,4 @@
-import { POST_TWEET, POST_TWEET_FAILURE, POST_TWEET_SUCCESS, FETCH_TWEETS, FETCH_TWEETS_SUCCESS, FETCH_TWEETS_FAILURE } from "./tweetTypes";
+import { POST_TWEET, POST_TWEET_FAILURE, POST_TWEET_SUCCESS, FETCH_TWEETS, FETCH_TWEETS_SUCCESS, FETCH_TWEETS_FAILURE, UPDATE_DELETED_TWEET } from "./tweetTypes";
 
 export const postTweetSuccess = (data: any) => {
   return {
@@ -35,5 +35,12 @@ export const fetchTweetsSuccess = (data) => {
 export const fetchTweetsFailure = () => {
   return {
     type: FETCH_TWEETS_FAILURE
+  }
+}
+
+export const updateDeletedTweet = (data) => {
+  return {
+    type: UPDATE_DELETED_TWEET,
+    payload: data
   }
 }

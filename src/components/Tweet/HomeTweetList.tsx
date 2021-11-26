@@ -1,5 +1,5 @@
 import { Stack } from "@chakra-ui/layout";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSelector, RootStateOrAny, useDispatch } from "react-redux";
 import { homeFetchTweets, homeFetchTweetsSuccess, homeLikedTweets, homeRetweetedTweets } from "../../store/home/homeAction";
 import { URL } from "../../url";
@@ -9,7 +9,7 @@ const HomeTweetList = () => {
   const x = useSelector((state: RootStateOrAny) => state)
   const dispatch = useDispatch();
   let fetched = false;
-
+  const [loading, setLoading] = useState(true)
   function mapToObject(tweets, type) {
     let obj = {}
     if(type === 'liked') {
@@ -35,7 +35,6 @@ const HomeTweetList = () => {
 
   useEffect(() => {
     dispatch(homeFetchTweets());
-
     Promise.all([
       fetch(URL + 'allLiked', {
         method: 'POST',
@@ -109,6 +108,7 @@ const HomeTweetList = () => {
       })
       dispatch(homeFetchTweetsSuccess(data))
       fetched = true;
+      setLoading(false)
     })
   }, [fetched])
   return (
@@ -116,6 +116,7 @@ const HomeTweetList = () => {
       HomeTweets
       <Stack alignItems={"center"} spacing={4}>
         {
+          loading === true ? 'loading' :
           x.home.tweets.map(tweet => {
             return <Tweet tweet={tweet} />
           })

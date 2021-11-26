@@ -1,4 +1,4 @@
-import { POST_TWEET, POST_TWEET_FAILURE, POST_TWEET_SUCCESS, FETCH_TWEETS, FETCH_TWEETS_SUCCESS, FETCH_TWEETS_FAILURE } from "./tweetTypes";
+import { POST_TWEET, POST_TWEET_FAILURE, POST_TWEET_SUCCESS, FETCH_TWEETS, FETCH_TWEETS_SUCCESS, FETCH_TWEETS_FAILURE, UPDATE_DELETED_TWEET } from "./tweetTypes";
 
 const initState = {
   tweet_data: [{
@@ -13,16 +13,7 @@ const initState = {
   error: ''
 }
 
-const tweetReducer = (state = initState, action: { 
-  type: string; 
-  payload: {
-    tweet_data: {
-      tweet_id: string,
-      tweet: string
-    }[];
-    error: string;
-    loading: boolean 
-  }}) => {
+const tweetReducer = (state = initState, action) => {
   switch(action.type) {
     case POST_TWEET: return {
       ...state,
@@ -53,6 +44,10 @@ const tweetReducer = (state = initState, action: {
       ...state,
       loading: false,
       error: action.payload.error
+    }
+    case UPDATE_DELETED_TWEET: return {
+      ...state,
+      tweet_data: state.tweet_data.filter(item => item.tweet_id !== action.payload.tweet_id)
     }
     default: return state
   }

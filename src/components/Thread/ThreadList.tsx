@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { URL } from "../../url"
 import { useParams, useHistory } from 'react-router';
 import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
@@ -11,6 +11,7 @@ const ThreadList = () => {
   const history = useHistory()
   const dispatch = useDispatch()
   const x = useSelector((state: RootStateOrAny) => state)
+  const [loading, setLoading] = useState(true)
   useEffect(() => {
     type Params = { tweet_id: string };
     type NoParams = {};
@@ -22,11 +23,10 @@ const ThreadList = () => {
       fetch(URL + 'fetchThread/' + params.tweet_id)
       .then(res => res.json())
       .then(res => {
-        console.log(res)
         dispatch(fetchThreadSuccess(res))
+        setLoading(false)
       })
       .catch(err => {
-        console.log(err)
         dispatch(fetchThreadFailure())
       })
       
@@ -36,9 +36,13 @@ const ThreadList = () => {
 
   return (
     <>
-      ThreadList
-      <Tweet tweet={x.thread.tweet} />
+      ThreadList 
       {
+        loading === true ? 'loading' :
+        <Tweet tweet={x.thread.tweet} />
+      }
+      {
+        loading === true ? 'loading' :
         x.thread.comments.map(comment =>  {
         return <ShowComment comment={comment} />
       })

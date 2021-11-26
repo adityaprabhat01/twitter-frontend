@@ -9,7 +9,7 @@ const CommentTextArea = (props) => {
   const [commentText, setCommentText] = useState('')
   const dispatch = useDispatch()
   const x = useSelector((state: RootStateOrAny) => state)
-
+  const { setCount, count } = props
   function handleToggle() {
     setToggle(!toggle)
   }
@@ -23,7 +23,7 @@ const CommentTextArea = (props) => {
         'Content-Type': 'application/json'
       },    
       body: JSON.stringify({
-        tweet_id: props.tweet.tweet_id,
+        tweet_id: props.props.tweet.tweet_id,
         author_id: x.auth.user_id,
         author_name: x.auth.name,
         author_username: x.auth.user_name,
@@ -32,9 +32,9 @@ const CommentTextArea = (props) => {
     })
     .then(res => res.json())
     .then(res => {
-      console.log(res)
       dispatch(postCommentThread(res))
       setToggle(!toggle)
+      setCount(count+1)
     })
     .catch(err => {
       console.log(err)

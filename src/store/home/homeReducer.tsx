@@ -11,7 +11,7 @@ const initState = {
     name: '',
     email: '',
     username: '',
-    author_id: ''
+    author_id: '',
   }],
   loading: false,
   error: '',

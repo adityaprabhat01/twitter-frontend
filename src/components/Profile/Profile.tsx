@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import TweetArea from '../Tweet/ TweetArea';
+import TweetArea from '../Tweet/TweetArea';
 import TweetList from '../Tweet/TweetList';
 import { useSelector, RootStateOrAny, useDispatch } from 'react-redux';
 import { useParams, useHistory } from 'react-router';

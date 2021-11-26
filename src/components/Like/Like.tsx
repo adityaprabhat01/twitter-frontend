@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { URL } from "../../url";
 import { useSelector, RootStateOrAny, useDispatch } from "react-redux";
 import { homeAddLikedTweets, homeRemoveLikedTweets } from "../../store/home/homeAction";
@@ -9,6 +10,22 @@ const Like = (props) => {
   const { following_id, tweet_id, author_id } = tweet
   const likedStatus = x.home.liked;
   const dispatch = useDispatch()
+  let fetched = false;
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+      if(tweet.tweet_id !== '') {
+        fetch(URL + 'likeCount/' + tweet.tweet_id)
+        .then(res => res.json())
+        .then(res => {
+          console.log(res)
+          setCount(res.count)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    }
+  }, [fetched])
 
   function handleLike() {
     fetch(URL + "like", {
@@ -30,6 +47,7 @@ const Like = (props) => {
         liked: status,
       }
       dispatch(homeAddLikedTweets(obj))
+      setCount(count+1);
     })
     .catch(err => {
       console.log(err)
@@ -52,6 +70,7 @@ const Like = (props) => {
     .then(res => {
       const { tweet_id, status } = res;
       dispatch(homeRemoveLikedTweets(tweet_id))
+      setCount(count-1)
     })
     .catch(err => {
       console.log(err)
@@ -72,6 +91,9 @@ const Like = (props) => {
               <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
             </svg>
           </Box>
+      }
+      {
+        count
       }
     </>
   )
