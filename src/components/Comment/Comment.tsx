@@ -11,7 +11,6 @@ const Comment = (props) => {
       fetch(URL + 'commentCount/' + tweet.tweet_id)
       .then(res => res.json())
       .then(res => {
-        console.log(res)
         fetched = true
         setCount(res.count)
       })

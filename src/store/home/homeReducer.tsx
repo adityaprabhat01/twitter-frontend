@@ -1,4 +1,4 @@
-import { HOME_FETCH_TWEETS, HOME_FETCH_TWEETS_SUCCESS, HOME_FETCH_TWEETS_FAILURE, HOME_ADD_LIKED_TWEETS, HOME_REMOVE_LIKED_TWEETS, HOME_LIKED_TWEETES, HOME_RETWEETED_TWEETES, HOME_ADD_RETWEETED_TWEETS, HOME_REMOVE_RETWEETED_TWEETS } from "./homeType";
+import { HOME_FETCH_TWEETS, HOME_FETCH_TWEETS_SUCCESS, HOME_FETCH_TWEETS_FAILURE, HOME_ADD_LIKED_TWEETS, HOME_REMOVE_LIKED_TWEETS, HOME_LIKED_TWEETES, HOME_RETWEETED_TWEETES, HOME_ADD_RETWEETED_TWEETS, HOME_REMOVE_RETWEETED_TWEETS, HOME_POST_COMMENT } from "./homeType";
 
 const initState = {
   tweets: [{
@@ -12,13 +12,14 @@ const initState = {
     email: '',
     username: '',
     author_id: '',
+    comments: []
   }],
   loading: false,
   error: '',
   liked: {},
   retweeted: {}
 }
-
+console.log(initState)
 const homeReducer = (state = initState, action) => {
   switch(action.type) {
     case HOME_FETCH_TWEETS: return {
@@ -59,6 +60,13 @@ const homeReducer = (state = initState, action) => {
       let newState_1 = { ...state };
       delete newState_1.retweeted[action.payload]
       return newState_1;
+    case HOME_POST_COMMENT: return {
+      ...state,
+      tweets: state.tweets.map((tweet, i) => tweet.tweet_id === action.payload.tweet_id ? {
+        ...tweet, comments: [...tweet.comments, action.payload]
+      } : tweet)
+    }
+
     default: return state;
   }
 }

@@ -102,7 +102,8 @@ const HomeTweetList = () => {
           name,
           email,
           username,
-          author_id
+          author_id,
+          comments: []
       }
         data.push(y)
       })

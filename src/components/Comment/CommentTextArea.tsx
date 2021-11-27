@@ -3,6 +3,7 @@ import { Box, Button, Textarea } from "@chakra-ui/react"
 import { URL } from '../../url'
 import { useSelector, useDispatch, RootStateOrAny } from 'react-redux'
 import { postCommentThread } from '../../store/thread/threadAction'
+import { homePostComment } from '../../store/home/homeAction'
 
 const CommentTextArea = (props) => {
   const [toggle, setToggle] = useState(false)
@@ -33,6 +34,7 @@ const CommentTextArea = (props) => {
     .then(res => res.json())
     .then(res => {
       dispatch(postCommentThread(res))
+      dispatch(homePostComment(res))
       setToggle(!toggle)
       setCount(count+1)
     })

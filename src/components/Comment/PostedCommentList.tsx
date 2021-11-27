@@ -1,15 +1,20 @@
 import { useSelector, RootStateOrAny } from "react-redux";
 import PostedComment from "./PostedComment"
+import { useLocation } from "react-router";
 
-const PostedCommentList = () => {
+const PostedCommentList = (props) => {
+  const { tweet } = props
   const x = useSelector((state: RootStateOrAny) => state)
-  console.log(x.thread.comments)
+  console.log(tweet, tweet.comments)
+  const location = useLocation()
+  const { pathname } = location
   return (
     <>
-    {
-      x.thread.comments.map(comment => {
-        <PostedComment comment={comment} />
-      })
+
+    { 
+      pathname === '/homepage' ?
+      tweet.comments.map(comment => <PostedComment comment={comment} />) :
+      null
     }
     </>
   )

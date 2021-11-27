@@ -7,7 +7,8 @@ import Comment from "../Comment/Comment";
 import PostedCommentList from "../Comment/PostedCommentList";
 
 const Tweet = (props: any) => {
-  const { tweet } = props;  
+  const { tweet } = props;
+  
   return (
     <Box border={"2px"} width={"350px"}>
       <span>
@@ -24,7 +25,7 @@ const Tweet = (props: any) => {
         <ThreadButton tweet={tweet} />
         <DeleteTweet tweet={tweet} />
       </Flex>
-      <PostedCommentList />
+      <PostedCommentList tweet={tweet} />
     </Box>
   )
 }

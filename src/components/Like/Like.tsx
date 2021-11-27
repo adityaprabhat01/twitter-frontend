@@ -18,7 +18,6 @@ const Like = (props) => {
         fetch(URL + 'likeCount/' + tweet.tweet_id)
         .then(res => res.json())
         .then(res => {
-          console.log(res)
           setCount(res.count)
         })
         .catch(err => {
