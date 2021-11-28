@@ -7,7 +7,6 @@ import { useParams, useHistory } from "react-router";
 import { Box, Center, Container, Stack, StackDivider } from "@chakra-ui/layout";
 
 const TweetList = () => {
-  let fetched = false;
   const x = useSelector((state: RootStateOrAny) => state)
   const dispatch = useDispatch()
   const params = useParams()

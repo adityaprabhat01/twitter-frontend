@@ -19,7 +19,7 @@ const initState = {
   liked: {},
   retweeted: {}
 }
-console.log(initState)
+
 const homeReducer = (state = initState, action) => {
   switch(action.type) {
     case HOME_FETCH_TWEETS: return {

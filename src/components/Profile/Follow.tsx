@@ -36,7 +36,6 @@ const Follow = () => {
     })
     .then(res => res.json())
     .then(res => {
-      console.log(res)
       dispatch(setFollowing(false))
     })
   }

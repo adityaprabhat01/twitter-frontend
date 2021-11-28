@@ -4,6 +4,7 @@ import { URL } from '../../url'
 import { useSelector, useDispatch, RootStateOrAny } from 'react-redux'
 import { postCommentThread } from '../../store/thread/threadAction'
 import { homePostComment } from '../../store/home/homeAction'
+import { postComment } from '../../store/tweet/tweetAction'
 
 const CommentTextArea = (props) => {
   const [toggle, setToggle] = useState(false)
@@ -35,6 +36,7 @@ const CommentTextArea = (props) => {
     .then(res => {
       dispatch(postCommentThread(res))
       dispatch(homePostComment(res))
+      dispatch(postComment(res))
       setToggle(!toggle)
       setCount(count+1)
     })

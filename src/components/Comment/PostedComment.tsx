@@ -1,7 +1,6 @@
 import { Box, Stack } from "@chakra-ui/layout"
 
 const PostedComment = (props) => {
-  console.log(props)
   const { comment } = props
   return (
     <>

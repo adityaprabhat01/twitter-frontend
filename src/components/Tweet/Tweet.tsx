@@ -8,7 +8,6 @@ import PostedCommentList from "../Comment/PostedCommentList";
 
 const Tweet = (props: any) => {
   const { tweet } = props;
-  
   return (
     <Box border={"2px"} width={"350px"}>
       <span>

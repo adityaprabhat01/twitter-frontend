@@ -30,6 +30,7 @@ const TweetArea = () => {
     })
     .then(res => res.json())
     .then(res => {
+      res['comments'] = []
       dispatch(postTweetSuccess(res))
     })
     .catch(err => console.log(err))

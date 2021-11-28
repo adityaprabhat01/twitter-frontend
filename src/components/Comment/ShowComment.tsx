@@ -2,7 +2,6 @@ import { Box } from "@chakra-ui/react"
 
 const ShowComment = (props) => {
   const { comment } = props
-  console.log(props)
   return (
     <Box border={"2px"} width={"350px"}>
       <span>
