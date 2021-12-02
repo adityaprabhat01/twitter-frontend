@@ -8,6 +8,8 @@ import { URL } from '../../url';
 import { fetchProfile, fetchProfileFailure, fetchProfileSuccess, setFollowing } from '../../store/profile/profileAction';
 import { Link } from 'react-router-dom';
 import SearchBar from '../SearchBar/SearchBar';
+import Followers from '../Button/Followers';
+import Following from '../Button/Following';
 
 const Profile = () => {
   const x = useSelector((state: RootStateOrAny) => state)
@@ -83,6 +85,9 @@ const Profile = () => {
 
       { x.profile.name }
       { x.profile.user_name }
+
+      <Followers />
+      <Following />
 
       {
         x.auth.user_name === x.profile.user_name ? <TweetArea />  : null

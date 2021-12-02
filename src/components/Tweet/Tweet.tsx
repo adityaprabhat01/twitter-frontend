@@ -5,12 +5,27 @@ import ThreadButton from "../Button/ThreadButton";
 import DeleteTweet from "./DeleteTweet";
 import Comment from "../Comment/Comment";
 import PostedCommentList from "../Comment/PostedCommentList";
+import { useHistory } from "react-router";
+import { URL } from "../../url";
 
 const Tweet = (props: any) => {
   const { tweet } = props;
+  const history = useHistory()
+
+  function handleSubmit(event: { preventDefault: () => void }) {
+    event.preventDefault();
+    fetch(URL + 'checkExistence/' + tweet.username)
+    .then(res => res.json())
+    .then(res => {
+      if(res.found === true) {
+        history.push('/profile/' + tweet.username)
+      }
+    })
+  }
+
   return (
     <Box border={"2px"} width={"350px"}>
-      <span>
+      <span onClick={handleSubmit}>
         <b>{ tweet.name }</b>&nbsp;
         <b>{ tweet.username }</b>
       </span>

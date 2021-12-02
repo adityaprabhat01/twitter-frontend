@@ -7,6 +7,8 @@ import SignUp from "./components/Auth/SignUp";
 import SignIn from "./components/Auth/SignIn";
 import Thread from "./components/Thread/Thread";
 import store from "./store/store";
+import FollowersList from "./components/Profile/FollowersList";
+import FollowingList from "./components/Profile/FollowingList";
 import { ChakraProvider, CSSReset } from "@chakra-ui/react";
 
 const App = () => {
@@ -21,6 +23,8 @@ const App = () => {
               <Route exact path="/homepage" component={Homepage} />
               <Route exact path="/profile/:user_name" component={Profile} />
               <Route exact path="/thread/:tweet_id" component={Thread} />
+              <Route exact path="/followersList" component={FollowersList} />
+              <Route exact path="/followingList" component={FollowingList} />
             </BrowserRouter>
           </Provider>
       </ChakraProvider>
