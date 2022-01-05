@@ -39,7 +39,6 @@ const Follow = () => {
       dispatch(setFollowing(false))
     })
   }
-  console.log("Follow")
   return (
     <div>
       {

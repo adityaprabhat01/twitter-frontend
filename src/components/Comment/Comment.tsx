@@ -12,7 +12,7 @@ const Comment = (props) => {
       .then(res => res.json())
       .then(res => {
         fetched = true
-        setCount(res.count)
+        setCount(res.comment_count)
       })
       .catch(err => {
         console.log(err)

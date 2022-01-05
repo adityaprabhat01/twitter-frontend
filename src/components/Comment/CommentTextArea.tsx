@@ -5,6 +5,7 @@ import { useSelector, useDispatch, RootStateOrAny } from 'react-redux'
 import { postCommentThread } from '../../store/thread/threadAction'
 import { homePostComment } from '../../store/home/homeAction'
 import { postComment } from '../../store/tweet/tweetAction'
+import { collection, addDoc, getFirestore, getDocs } from "firebase/firestore"; 
 
 const CommentTextArea = (props) => {
   const [toggle, setToggle] = useState(false)
@@ -16,34 +17,39 @@ const CommentTextArea = (props) => {
     setToggle(!toggle)
   }
   function handleTextArea(event) {
+    console.log(event.target.value)
     setCommentText(event.target.value)
   }
-  function handlePostComment() {
-    fetch(URL + 'postComment', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },    
-      body: JSON.stringify({
+
+  async function postCommentAndCount() {
+    const db = getFirestore();
+    try {
+      const obj = {
         tweet_id: props.props.tweet.tweet_id,
         author_id: x.auth.user_id,
         author_name: x.auth.name,
         author_username: x.auth.user_name,
         comment_text: commentText
+      }
+      const docRef = await addDoc(collection(db, "comments"), obj);
+      fetch(URL + 'plusComment/' + props.props.tweet.tweet_id)
+      .then(res => res.json())
+      .then(res => {
+        console.log(res.comment_count)
+        setCount(res.comment_count)
       })
-    })
-    .then(res => res.json())
-    .then(res => {
-      dispatch(postCommentThread(res))
-      dispatch(homePostComment(res))
-      dispatch(postComment(res))
+      obj['_id'] = docRef.id
+      console.log(obj)
+      dispatch(postCommentThread(obj))
+      dispatch(homePostComment(obj))
+      dispatch(postComment(obj))
       setToggle(!toggle)
-      setCount(count+1)
-    })
-    .catch(err => {
-      console.log(err)
-    })
+    } catch (e) {
+      console.error("Error adding document: ", e);
+    }
   }
+
+
 
   return (
     <>
@@ -57,7 +63,7 @@ const CommentTextArea = (props) => {
         null :
         <>
           <Textarea onChange={handleTextArea} />
-          <Button onClick={handlePostComment}>Post</Button>
+          <Button onClick={postCommentAndCount}>Post</Button>
         </>
       }
     </>

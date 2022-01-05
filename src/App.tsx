@@ -9,6 +9,7 @@ import Thread from "./components/Thread/Thread";
 import store from "./store/store";
 import FollowersList from "./components/Profile/FollowersList";
 import FollowingList from "./components/Profile/FollowingList";
+import LikedTweetsList from "./components/Profile/LikedTweetsList"
 import { ChakraProvider, CSSReset } from "@chakra-ui/react";
 
 const App = () => {
@@ -25,6 +26,7 @@ const App = () => {
               <Route exact path="/thread/:tweet_id" component={Thread} />
               <Route exact path="/followersList" component={FollowersList} />
               <Route exact path="/followingList" component={FollowingList} />
+              <Route exact path="/likedTweetsList" component={LikedTweetsList} />
             </BrowserRouter>
           </Provider>
       </ChakraProvider>

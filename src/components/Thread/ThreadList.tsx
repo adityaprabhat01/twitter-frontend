@@ -5,6 +5,7 @@ import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
 import { fetchThread, fetchThreadFailure, fetchThreadSuccess } from "../../store/thread/threadAction";
 import Tweet from "../Tweet/Tweet";
 import ShowComment from "../Comment/ShowComment";
+import { collection, doc, setDoc, getFirestore, query, where, getDocs } from "firebase/firestore"; 
 
 const ThreadList = () => {
   const params = useParams()
@@ -22,7 +23,12 @@ const ThreadList = () => {
       dispatch(fetchThread())
       fetch(URL + 'fetchThread/' + params.tweet_id)
       .then(res => res.json())
-      .then(res => {
+      .then(async (res) => {
+        const db = getFirestore();
+        const commentsRef = collection(db, "comments");
+        const q = query(commentsRef, where("tweet_id", "==", params.tweet_id));
+        const querySnapshot = await getDocs(q);
+        res.push(querySnapshot.docs)
         dispatch(fetchThreadSuccess(res))
         setLoading(false)
       })
@@ -32,7 +38,6 @@ const ThreadList = () => {
       
     }
   }, [history.location.pathname])
-  
 
   return (
     <>

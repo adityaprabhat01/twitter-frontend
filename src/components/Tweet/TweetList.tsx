@@ -63,9 +63,9 @@ const TweetList = () => {
   return (
     <>
         <Stack alignItems={"center"} spacing={4}>
-          TweetList
+          <div>TweetList</div>
             {
-              loading === true ? 'loading' :
+              loading === true ? <span>loading</span> :
               x.tweet.tweet_data.map(tweet => {
                 return <Tweet tweet={tweet} />
               })

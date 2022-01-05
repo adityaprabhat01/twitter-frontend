@@ -10,6 +10,7 @@ import { Link } from 'react-router-dom';
 import SearchBar from '../SearchBar/SearchBar';
 import Followers from '../Button/Followers';
 import Following from '../Button/Following';
+import LikedTweetsButton from '../Button/LikedTweetButton';
 
 const Profile = () => {
   const x = useSelector((state: RootStateOrAny) => state)
@@ -88,6 +89,7 @@ const Profile = () => {
 
       <Followers />
       <Following />
+      <LikedTweetsButton />
 
       {
         x.auth.user_name === x.profile.user_name ? <TweetArea />  : null

@@ -117,7 +117,7 @@ const HomeTweetList = () => {
       HomeTweets
       <Stack alignItems={"center"} spacing={4}>
         {
-          loading === true ? 'loading' :
+          loading === true ? <span>loading</span> :
           x.home.tweets.map(tweet => {
             return <Tweet tweet={tweet} />
           })
