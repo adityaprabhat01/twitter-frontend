@@ -29,10 +29,13 @@ const CommentTextArea = (props) => {
         author_id: x.auth.user_id,
         author_name: x.auth.name,
         author_username: x.auth.user_name,
-        comment_text: commentText
+        comment_text: commentText,
+        rplies: []
       }
       const docRef = await addDoc(collection(db, "comments"), obj);
-      fetch(URL + 'plusComment/' + props.props.tweet.tweet_id)
+      fetch(URL + 'plusComment/' + props.props.tweet.tweet_id, {
+        credentials: 'include'
+      })
       .then(res => res.json())
       .then(res => {
         console.log(res.comment_count)

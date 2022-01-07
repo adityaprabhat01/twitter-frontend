@@ -14,7 +14,8 @@ const Follow = () => {
       body: JSON.stringify({
         follower_id: x.auth.user_id,
         following_id: x.profile.user_id
-      })
+      }),
+      credentials: 'include'
     })
     .then(res => res.json())
     .then(res => {
@@ -32,7 +33,8 @@ const Follow = () => {
       body: JSON.stringify({
         follower_id: x.auth.user_id,
         following_id: x.profile.user_id
-      })
+      }),
+      credentials: 'include'
     })
     .then(res => res.json())
     .then(res => {

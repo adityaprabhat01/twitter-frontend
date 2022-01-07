@@ -8,14 +8,16 @@ const FollowingList = () => {
   const [following, setFollowing] = useState([])
   let fetched = false;
   useEffect(() => {
-    fetch(URL + 'followingList/' + x.auth.user_id)
+    fetch(URL + 'followingList/' + x.auth.user_id, {
+      credentials: 'include'
+    })
     .then(res => res.json())
     .then(res => {
       fetched = true;
       setFollowing(res)
     })
   }, [fetched])
-  console.log(following)
+
   return (
     <>
       Following

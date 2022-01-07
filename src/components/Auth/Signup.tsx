@@ -27,14 +27,15 @@ const SignUp = () => {
     fetch(url, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
-      },    
+        'Content-Type': 'application/json',
+      },
       body: JSON.stringify({
         email,
         password,
         name,
         username
-      })
+      }),
+      credentials: 'include'
     })
     .then(res => res.json())
     .then(res => {
@@ -70,9 +71,7 @@ const SignUp = () => {
           <FormControl>
             <Button bg={"#A0AEC0"} onClick={handleSubmit} mt={4}>Sign Up</Button>
           </FormControl>
-          </Box>
-          
-          
+          </Box>          
         </form>
       </Flex>
     </>

@@ -21,7 +21,9 @@ const ThreadList = () => {
     }
     if(isParams(params))  {
       dispatch(fetchThread())
-      fetch(URL + 'fetchThread/' + params.tweet_id)
+      fetch(URL + 'fetchThread/' + params.tweet_id, {
+        credentials: 'include'
+      })
       .then(res => res.json())
       .then(async (res) => {
         const db = getFirestore();

@@ -38,7 +38,8 @@ const Profile = () => {
         },
         body: JSON.stringify({
           user_name: params.user_name
-        })
+        }),
+        credentials: 'include'
       })
       .then(res => res.json())
       .then(res => {
@@ -59,7 +60,8 @@ const Profile = () => {
           body: JSON.stringify({
             follower_id: x.auth.user_id,
             following_id: user_id
-          })
+          }),
+          credentials: 'include'
         })
         .then(res => res.json())
         .then(res => {

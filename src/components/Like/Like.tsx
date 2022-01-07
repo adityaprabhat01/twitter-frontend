@@ -15,7 +15,9 @@ const Like = (props) => {
 
   useEffect(() => {
       if(tweet.tweet_id !== '') {
-        fetch(URL + 'likeCount/' + tweet.tweet_id)
+        fetch(URL + 'likeCount/' + tweet.tweet_id, {
+          credentials: 'include'
+        })
         .then(res => res.json())
         .then(res => {
           setCount(res.count)
@@ -36,7 +38,8 @@ const Like = (props) => {
         user_id: x.auth.user_id,
         author_id,
         tweet_id
-      })
+      }),
+      credentials: 'include'
     })
     .then(res => res.json())
     .then(res => {
@@ -63,7 +66,8 @@ const Like = (props) => {
         user_id: x.auth.user_id,
         author_id,
         tweet_id: tweet_id
-      })
+      }),
+      credentials: 'include'
     })
     .then(res => res.json())
     .then(res => {

@@ -8,7 +8,9 @@ const Comment = (props) => {
   let fetched = false;
   useEffect(() => {
     if(tweet.tweet_id !== '') {
-      fetch(URL + 'commentCount/' + tweet.tweet_id)
+      fetch(URL + 'commentCount/' + tweet.tweet_id, {
+        credentials: 'include'
+      })
       .then(res => res.json())
       .then(res => {
         fetched = true

@@ -19,7 +19,8 @@ const Retweet = (props) => {
         user_id: x.auth.user_id,
         author_id: author_id,
         tweet_id
-      })
+      }),
+      credentials: 'include'
     })
     .then(res => res.json())
     .then(res => {
@@ -46,7 +47,8 @@ const Retweet = (props) => {
         user_id: x.auth.user_id,
         author_id: author_id,
         tweet_id
-      })
+      }),
+      credentials: 'include'
     })
     .then(res => res.json())
     .then(res => {

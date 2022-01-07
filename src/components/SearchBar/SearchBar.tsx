@@ -11,7 +11,9 @@ const SearchBar = () => {
 
   function handleSubmit(event: { preventDefault: () => void }) {
     event.preventDefault();
-    fetch(URL + 'checkExistence/' + user_name.toString())
+    fetch(URL + 'checkExistence/' + user_name.toString(), {
+      credentials: 'include'
+    })
     .then(res => res.json())
     .then(res => {
       if(res.found === true) {

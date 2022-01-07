@@ -9,13 +9,15 @@ const LikedTweetList = () => {
   const [LikedTweets, setLikedTweets] = useState([])
 
   useEffect(() => {
-    fetch(URL + 'likedTweetsWithDetails/' + x.auth.user_id)
+    fetch(URL + 'likedTweetsWithDetails/' + x.auth.user_id, {
+      credentials: 'include'
+    })
     .then(res => res.json())
     .then(res => {
       fetched = true;
       setLikedTweets(res)
     })
-  })
+  }, [fetched])
   
   return (
     <>

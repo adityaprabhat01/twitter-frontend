@@ -9,13 +9,15 @@ const FollowersList = () => {
   const [followers, setFollowers] = useState([])
 
   useEffect(() => {
-    fetch(URL + 'followerList/' + x.auth.user_id)
+    fetch(URL + 'followerList/' + x.auth.user_id, {
+      credentials: 'include'
+    })
     .then(res => res.json())
     .then(res => {
       fetched = true;
       setFollowers(res)
     })
-  })
+  }, [fetched])
   
   return (
     <>

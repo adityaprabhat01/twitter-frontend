@@ -26,7 +26,8 @@ const TweetArea = () => {
         author_id: x.auth.user_id,
         name: x.auth.name,
         user_name: x.auth.user_name
-      })
+      }),
+      credentials: 'include'
     })
     .then(res => res.json())
     .then(res => {

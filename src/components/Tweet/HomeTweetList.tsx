@@ -1,12 +1,14 @@
 import { Stack } from "@chakra-ui/layout";
 import { useEffect, useState } from "react";
 import { useSelector, RootStateOrAny, useDispatch } from "react-redux";
+import { useHistory } from "react-router";
 import { homeFetchTweets, homeFetchTweetsSuccess, homeLikedTweets, homeRetweetedTweets } from "../../store/home/homeAction";
 import { URL } from "../../url";
 import Tweet from "./Tweet";
 
 const HomeTweetList = () => {
   const x = useSelector((state: RootStateOrAny) => state)
+  const history = useHistory();
   const dispatch = useDispatch();
   let fetched = false;
   const [loading, setLoading] = useState(true)
@@ -43,7 +45,8 @@ const HomeTweetList = () => {
         },
         body: JSON.stringify({
           user_id: x.auth.user_id
-        })
+        }),
+        credentials: 'include'
       }),
       fetch(URL + 'allRetweeted', {
         method: 'POST',
@@ -52,7 +55,8 @@ const HomeTweetList = () => {
         },
         body: JSON.stringify({
           user_id: x.auth.user_id
-        })
+        }),
+        credentials: 'include'
       })
     ])
     .then(responses =>
@@ -74,10 +78,14 @@ const HomeTweetList = () => {
       },
       body: JSON.stringify({
         user_id: x.auth.user_id
-      })
+      }),
+      credentials: 'include'
     })
     .then(res => res.json())
     .then(res => {
+      if(typeof res === 'object' && res.redirect === true) {
+        history.push('/signin')
+      }
       let data: any = []
       res.map(val => {
         const {

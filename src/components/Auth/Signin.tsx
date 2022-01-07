@@ -8,7 +8,6 @@ const SignIn = () => {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [signedIn, setSignedIn] = useState(false);
   const dispatch = useDispatch()
   const history = useHistory()
   const x = useSelector(state => state)
@@ -32,7 +31,8 @@ const SignIn = () => {
       body: JSON.stringify({
         email,
         password
-      })
+      }),
+      credentials: 'include'
     })
     .then(res => res.json())
     .then(res => {

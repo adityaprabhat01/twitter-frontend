@@ -16,7 +16,8 @@ const DeleteTweet = (props) => {
         profile_id: props.tweet.user_id,
         tweet_id: props.tweet.tweet_id,
         user_id: x.auth.user_id
-      })
+      }),
+      credentials: 'include'
     })
     .then(res => res.json())
     .then(res => {

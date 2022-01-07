@@ -14,7 +14,9 @@ const Tweet = (props: any) => {
 
   function handleSubmit(event: { preventDefault: () => void }) {
     event.preventDefault();
-    fetch(URL + 'checkExistence/' + tweet.username)
+    fetch(URL + 'checkExistence/' + tweet.username, {
+      credentials: 'include'
+    })
     .then(res => res.json())
     .then(res => {
       if(res.found === true) {

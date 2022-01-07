@@ -30,7 +30,8 @@ const TweetList = () => {
           body: JSON.stringify({
             user_id: x.auth.user_name === params.user_name ? x.auth.user_id : '',
             user_name: params.user_name
-          })
+          }),
+          credentials: 'include'
         }),
 
         fetch(URL + 'ownRetweetedTweets', {
@@ -41,7 +42,8 @@ const TweetList = () => {
           body: JSON.stringify({
             user_id: x.auth.user_name === params.user_name ? x.auth.user_id : '',
             user_name: params.user_name
-          })
+          }),
+          credentials: 'include'
         })
       ])
       .then(responses =>
