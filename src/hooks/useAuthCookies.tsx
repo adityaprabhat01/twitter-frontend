@@ -14,7 +14,6 @@ const useAuthCookies = () => {
       user_id,
       name
     }
-    console.log(data)
     dispatch(setAuthFromCookies(data))
   }
 }

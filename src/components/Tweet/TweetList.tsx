@@ -4,7 +4,7 @@ import { fetchTweets, fetchTweetsSuccess, fetchTweetsFailure } from '../../store
 import { URL } from "../../url";
 import Tweet from "./Tweet";
 import { useParams, useHistory } from "react-router";
-import { Box, Center, Container, Stack, StackDivider } from "@chakra-ui/layout";
+import { Box, Center, Container, Divider, Stack, StackDivider } from "@chakra-ui/layout";
 import { Spinner } from "@chakra-ui/react";
 
 const TweetList = () => {
@@ -65,21 +65,28 @@ const TweetList = () => {
   
   return (
     <>
-        <Stack alignItems={"center"} spacing={4}>
-          <div>TweetList</div>
-            {
-              loading === true ? <Spinner
-              thickness='4px'
-              speed='0.65s'
-              emptyColor='gray.200'
-              color='blue.500'
-              size='xl'
-            /> :
-              x.tweet.tweet_data.map(tweet => {
-                return <Tweet tweet={tweet} />
-              })
-            }      
-        </Stack>
+      <Center>
+        <Stack border={"2px"} alignItems={"center"} spacing={4} maxWidth={'600px'}>
+            <div>TweetList</div>
+              {
+                loading === true ? <Spinner
+                thickness='4px'
+                speed='0.65s'
+                emptyColor='gray.200'
+                color='blue.500'
+                size='xl'
+              /> :
+                x.tweet.tweet_data.map(tweet => {
+                  return (
+                    <>
+                      <Tweet tweet={tweet} />
+                      <Divider />
+                    </>
+                  )
+                })
+              }      
+          </Stack>
+      </Center>
     </>
     
   )

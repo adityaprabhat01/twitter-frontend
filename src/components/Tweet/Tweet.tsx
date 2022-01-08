@@ -26,7 +26,7 @@ const Tweet = (props: any) => {
   }
   
   return (
-    <Box border={"2px"} width={"350px"}>
+    <Box minWidth={'600px'} padding={2}>
       <span onClick={handleSubmit}>
         <b>{ tweet.name }</b>&nbsp;
         <b>{ tweet.username }</b>

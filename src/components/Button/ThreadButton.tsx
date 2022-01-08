@@ -6,7 +6,7 @@ const ThreadButton = (props) => {
   return (
     <>
       <Link to={`/thread/${props.tweet.tweet_id}`}>
-        <Button>Thread</Button>
+        <Button mt={4}>Thread</Button>
       </Link>
     </>
   )

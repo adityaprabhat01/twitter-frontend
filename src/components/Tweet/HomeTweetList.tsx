@@ -1,4 +1,4 @@
-import { Stack } from "@chakra-ui/layout";
+import { Center, Divider, Stack } from "@chakra-ui/layout";
 import { Spinner } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { useSelector, RootStateOrAny, useDispatch } from "react-redux";
@@ -125,21 +125,28 @@ const HomeTweetList = () => {
   }, [fetched])
   return (
     <>
-      HomeTweets
-      <Stack alignItems={"center"} spacing={4}>
-        {
-          loading === true ? <Spinner
-          thickness='4px'
-          speed='0.65s'
-          emptyColor='gray.200'
-          color='blue.500'
-          size='xl'
-        /> :
-          x.home.tweets.map(tweet => {
-            return <Tweet tweet={tweet} />
-          })
-        }
-      </Stack>
+      <Center>
+        <Stack border={'2px'} alignItems={"center"} spacing={4} maxWidth={'600px'}>
+          <div>TweetList</div>
+          {
+            loading === true ? <Spinner
+            thickness='4px'
+            speed='0.65s'
+            emptyColor='gray.200'
+            color='blue.500'
+            size='xl'
+          /> :
+            x.home.tweets.map(tweet => {
+              return (
+                <>
+                  <Tweet tweet={tweet} />
+                  <Divider />
+                </>
+              )
+            })
+          }
+        </Stack>
+      </Center>
     </>
   )
 }
