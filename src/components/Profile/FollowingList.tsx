@@ -2,11 +2,13 @@ import { URL } from "../../url";
 import { useSelector, RootStateOrAny } from "react-redux";
 import { useEffect, useState } from "react";
 import UserDetails from "./UserDetails";
+import useAuthCookies from "../../hooks/useAuthCookies";
 
 const FollowingList = () => {
   const x = useSelector((state: RootStateOrAny) => state)
   const [following, setFollowing] = useState([])
   let fetched = false;
+  useAuthCookies()
   useEffect(() => {
     fetch(URL + 'followingList/' + x.auth.user_id, {
       credentials: 'include'

@@ -2,12 +2,13 @@ import { URL } from "../../url";
 import { useSelector, RootStateOrAny } from "react-redux";
 import { useEffect, useState } from "react";
 import Tweet from "../Tweet/Tweet";
+import useAuthCookies from "../../hooks/useAuthCookies";
 
 const LikedTweetList = () => {
   let fetched = false;
   const x = useSelector((state: RootStateOrAny) => state)
   const [LikedTweets, setLikedTweets] = useState([])
-
+  useAuthCookies()
   useEffect(() => {
     fetch(URL + 'likedTweetsWithDetails/' + x.auth.user_id, {
       credentials: 'include'

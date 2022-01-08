@@ -6,6 +6,7 @@ import { fetchThread, fetchThreadFailure, fetchThreadSuccess } from "../../store
 import Tweet from "../Tweet/Tweet";
 import ShowComment from "../Comment/ShowComment";
 import { collection, doc, setDoc, getFirestore, query, where, getDocs } from "firebase/firestore"; 
+import { Spinner } from "@chakra-ui/react";
 
 const ThreadList = () => {
   const params = useParams()
@@ -45,11 +46,23 @@ const ThreadList = () => {
     <>
       ThreadList 
       {
-        loading === true ? 'loading' :
+        loading === true ? <Spinner
+        thickness='4px'
+        speed='0.65s'
+        emptyColor='gray.200'
+        color='blue.500'
+        size='xl'
+      /> :
         <Tweet tweet={x.thread.tweet} />
       }
       {
-        loading === true ? 'loading' :
+        loading === true ? <Spinner
+        thickness='4px'
+        speed='0.65s'
+        emptyColor='gray.200'
+        color='blue.500'
+        size='xl'
+      /> :
         x.thread.comments.map(comment =>  {
         return <ShowComment comment={comment} />
       })

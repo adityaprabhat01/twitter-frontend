@@ -1,32 +1,16 @@
-import { useEffect, useState } from "react";
-import { URL } from "../../url";
+import { useState } from "react";
 import { useSelector, RootStateOrAny, useDispatch } from "react-redux";
 import { homeAddLikedTweets, homeRemoveLikedTweets } from "../../store/home/homeAction";
-import { Box, Button } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
+import { URL } from "../../url";
 
 const Like = (props) => {
   const x = useSelector((state: RootStateOrAny) => state)
   const { tweet } = props
-  const { following_id, tweet_id, author_id } = tweet
+  const { tweet_id, author_id } = tweet
   const likedStatus = x.home.liked;
   const dispatch = useDispatch()
-  let fetched = false;
-  const [count, setCount] = useState(0);
-
-  useEffect(() => {
-      if(tweet.tweet_id !== '') {
-        fetch(URL + 'likeCount/' + tweet.tweet_id, {
-          credentials: 'include'
-        })
-        .then(res => res.json())
-        .then(res => {
-          setCount(res.count)
-        })
-        .catch(err => {
-          console.log(err)
-        })
-    }
-  }, [fetched])
+  const [count, setCount] = useState(tweet.likes_count);
 
   function handleLike() {
     fetch(URL + "like", {

@@ -15,7 +15,6 @@ const PostedCommentList = (props) => {
       tweet.comments.map(comment => <PostedComment comment={comment} />) :
       null
     }
-    <Button>Comment</Button>
     </>
   )
 }

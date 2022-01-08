@@ -11,15 +11,33 @@ import SearchBar from '../SearchBar/SearchBar';
 import Followers from '../Button/Followers';
 import Following from '../Button/Following';
 import LikedTweetsButton from '../Button/LikedTweetButton';
+import { setAuthFromCookies } from '../../store/auth/authAction';
+
+//import Cookies from 'js-cookie'
+import useAuthCookies from '../../hooks/useAuthCookies';
+// function setAuth() {
+//   const username = Cookies.get('username')
+//   const user_id = Cookies.get('user_id')
+//   const name = Cookies.get('name')
+//   const data = {
+//     username,
+//     user_id,
+//     name
+//   }
+//   console.log(data)
+//   const dispatch = useDispatch()
+//   dispatch(setAuthFromCookies(data))
+// }
 
 const Profile = () => {
+
   const x = useSelector((state: RootStateOrAny) => state)
   const params = useParams()
   const dispatch = useDispatch()
   const [ownProfile, setOwnProfile] = useState(true);
   let ownProfileStatus = false;
   const history = useHistory()
-
+  useAuthCookies()
   useEffect(() => {
     type Params = { user_name: string };
     type NoParams = {};
@@ -27,6 +45,7 @@ const Profile = () => {
       return (params as Params).user_name !== undefined;
     }
     if(isParams(params))  {
+
       if(x.auth.user_name === params.user_name) {
         setOwnProfile(false)
       }

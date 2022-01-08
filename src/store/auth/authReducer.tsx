@@ -1,5 +1,5 @@
 import React from "react"
-import { SIGN_IN, FETCH_USER, FETCH_USER_FAILURE } from "./authType"
+import { SIGN_IN, FETCH_USER, FETCH_USER_FAILURE, SET_AUTH_FROM_COOKIES } from "./authType"
 
 const initState = {
   user_id: '',
@@ -25,6 +25,13 @@ const authReducer = (state = initState, action: { type: string; payload: { name:
     case FETCH_USER_FAILURE: return {
       ...state,
       error: action.payload.error
+    }
+    case SET_AUTH_FROM_COOKIES: return {
+      ...state,
+      user_id: action.payload.user_id,
+      user_name: action.payload.user_name,
+      loading: false,
+      name: action.payload.name
     }
     default: return state
   }

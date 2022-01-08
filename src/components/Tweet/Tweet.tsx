@@ -11,7 +11,7 @@ import { URL } from "../../url";
 const Tweet = (props: any) => {
   const { tweet } = props;
   const history = useHistory()
-
+  
   function handleSubmit(event: { preventDefault: () => void }) {
     event.preventDefault();
     fetch(URL + 'checkExistence/' + tweet.username, {
@@ -24,7 +24,7 @@ const Tweet = (props: any) => {
       }
     })
   }
-
+  
   return (
     <Box border={"2px"} width={"350px"}>
       <span onClick={handleSubmit}>

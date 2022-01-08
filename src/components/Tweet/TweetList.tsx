@@ -5,6 +5,7 @@ import { URL } from "../../url";
 import Tweet from "./Tweet";
 import { useParams, useHistory } from "react-router";
 import { Box, Center, Container, Stack, StackDivider } from "@chakra-ui/layout";
+import { Spinner } from "@chakra-ui/react";
 
 const TweetList = () => {
   const x = useSelector((state: RootStateOrAny) => state)
@@ -67,7 +68,13 @@ const TweetList = () => {
         <Stack alignItems={"center"} spacing={4}>
           <div>TweetList</div>
             {
-              loading === true ? <span>loading</span> :
+              loading === true ? <Spinner
+              thickness='4px'
+              speed='0.65s'
+              emptyColor='gray.200'
+              color='blue.500'
+              size='xl'
+            /> :
               x.tweet.tweet_data.map(tweet => {
                 return <Tweet tweet={tweet} />
               })
