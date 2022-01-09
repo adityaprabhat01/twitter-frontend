@@ -5,20 +5,24 @@ import Tweet from "../Tweet/Tweet";
 import useAuthCookies from "../../hooks/useAuthCookies";
 
 const LikedTweetList = () => {
-  let fetched = false;
   const x = useSelector((state: RootStateOrAny) => state)
   const [LikedTweets, setLikedTweets] = useState([])
   useAuthCookies()
+  const controller = new AbortController()
   useEffect(() => {
-    fetch(URL + 'likedTweetsWithDetails/' + x.auth.user_id, {
-      credentials: 'include'
+    fetch(URL + 'likedTweetsWithDetails/' + x.profile.user_id, {
+      credentials: 'include',
+      signal: controller.signal
     })
     .then(res => res.json())
     .then(res => {
-      fetched = true;
       setLikedTweets(res)
     })
-  }, [fetched])
+
+    return () => {
+      controller.abort()
+    }
+  }, [])
   
   return (
     <>

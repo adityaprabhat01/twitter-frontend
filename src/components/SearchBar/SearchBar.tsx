@@ -1,4 +1,4 @@
-import { SetStateAction, useEffect, useState } from "react"
+import { SetStateAction, useState } from "react"
 import { useHistory } from "react-router"
 import { URL } from "../../url"
 

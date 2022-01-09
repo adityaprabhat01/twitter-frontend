@@ -11,8 +11,9 @@ const HomeTweetList = () => {
   const x = useSelector((state: RootStateOrAny) => state)
   const history = useHistory();
   const dispatch = useDispatch();
-  let fetched = false;
   const [loading, setLoading] = useState(true)
+  const controller = new AbortController()
+
   function mapToObject(tweets, type) {
     let obj = {}
     if(type === 'liked') {
@@ -47,8 +48,10 @@ const HomeTweetList = () => {
         body: JSON.stringify({
           user_id: x.auth.user_id
         }),
-        credentials: 'include'
+        credentials: 'include',
+        signal: controller.signal
       }),
+
       fetch(URL + 'allRetweeted', {
         method: 'POST',
         headers: {
@@ -57,7 +60,8 @@ const HomeTweetList = () => {
         body: JSON.stringify({
           user_id: x.auth.user_id
         }),
-        credentials: 'include'
+        credentials: 'include',
+        signal: controller.signal
       })
     ])
     .then(responses =>
@@ -119,10 +123,9 @@ const HomeTweetList = () => {
         data.push(y)
       })
       dispatch(homeFetchTweetsSuccess(data))
-      fetched = true;
       setLoading(false)
     })
-  }, [fetched])
+  }, [])
   return (
     <>
       <Center>

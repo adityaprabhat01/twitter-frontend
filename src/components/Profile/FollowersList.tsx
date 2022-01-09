@@ -5,20 +5,24 @@ import UserDetails from "./UserDetails";
 import useAuthCookies from "../../hooks/useAuthCookies";
 
 const FollowersList = () => {
-  let fetched = false;
   const x = useSelector((state: RootStateOrAny) => state)
   const [followers, setFollowers] = useState([])
   useAuthCookies()
+  const controller = new AbortController()
   useEffect(() => {
-    fetch(URL + 'followerList/' + x.auth.user_id, {
-      credentials: 'include'
+    fetch(URL + 'followerList/' + x.profile.user_id, {
+      credentials: 'include',
+      signal: controller.signal
     })
     .then(res => res.json())
     .then(res => {
-      fetched = true;
       setFollowers(res)
     })
-  }, [fetched])
+
+    return () => {
+      controller.abort()
+    }
+  }, [])
   
   return (
     <>

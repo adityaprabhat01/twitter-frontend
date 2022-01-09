@@ -4,6 +4,7 @@ import { URL } from "../../url";
 
 const LogOut = () => {
   const history = useHistory()
+  
   function handleLogOut(event) {
     fetch(URL + 'logout', {
       credentials: 'include'

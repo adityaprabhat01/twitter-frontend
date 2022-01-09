@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import { useEffect } from 'react'
 import TweetArea from '../Tweet/TweetArea';
 import TweetList from '../Tweet/TweetList';
 import { useSelector, RootStateOrAny, useDispatch } from 'react-redux';
@@ -6,38 +6,19 @@ import { useParams, useHistory } from 'react-router';
 import Follow from './Follow';
 import { URL } from '../../url';
 import { fetchProfile, fetchProfileFailure, fetchProfileSuccess, setFollowing } from '../../store/profile/profileAction';
-import { Link } from 'react-router-dom';
 import SearchBar from '../SearchBar/SearchBar';
 import Followers from '../Button/Followers';
 import Following from '../Button/Following';
 import LikedTweetsButton from '../Button/LikedTweetButton';
-import { setAuthFromCookies } from '../../store/auth/authAction';
-
-//import Cookies from 'js-cookie'
 import useAuthCookies from '../../hooks/useAuthCookies';
-// function setAuth() {
-//   const username = Cookies.get('username')
-//   const user_id = Cookies.get('user_id')
-//   const name = Cookies.get('name')
-//   const data = {
-//     username,
-//     user_id,
-//     name
-//   }
-//   console.log(data)
-//   const dispatch = useDispatch()
-//   dispatch(setAuthFromCookies(data))
-// }
 
 const Profile = () => {
-
   const x = useSelector((state: RootStateOrAny) => state)
   const params = useParams()
   const dispatch = useDispatch()
-  const [ownProfile, setOwnProfile] = useState(true);
-  let ownProfileStatus = false;
   const history = useHistory()
   useAuthCookies()
+  const controller = new AbortController()
   useEffect(() => {
     type Params = { user_name: string };
     type NoParams = {};
@@ -45,10 +26,6 @@ const Profile = () => {
       return (params as Params).user_name !== undefined;
     }
     if(isParams(params))  {
-
-      if(x.auth.user_name === params.user_name) {
-        setOwnProfile(false)
-      }
       dispatch(fetchProfile())
       fetch(URL + 'search', {
         method: 'POST',
@@ -58,7 +35,8 @@ const Profile = () => {
         body: JSON.stringify({
           user_name: params.user_name
         }),
-        credentials: 'include'
+        credentials: 'include',
+        signal: controller.signal
       })
       .then(res => res.json())
       .then(res => {
@@ -80,7 +58,8 @@ const Profile = () => {
             follower_id: x.auth.user_id,
             following_id: user_id
           }),
-          credentials: 'include'
+          credentials: 'include',
+          signal: controller.signal
         })
         .then(res => res.json())
         .then(res => {
@@ -93,6 +72,10 @@ const Profile = () => {
       })
       .catch(err => dispatch(fetchProfileFailure()))
       
+    }
+
+    return () => {
+      controller.abort()
     }
   }, [history.location.pathname])
 

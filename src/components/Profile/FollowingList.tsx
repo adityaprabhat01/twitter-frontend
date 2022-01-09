@@ -7,18 +7,22 @@ import useAuthCookies from "../../hooks/useAuthCookies";
 const FollowingList = () => {
   const x = useSelector((state: RootStateOrAny) => state)
   const [following, setFollowing] = useState([])
-  let fetched = false;
   useAuthCookies()
+  const controller = new AbortController()
   useEffect(() => {
-    fetch(URL + 'followingList/' + x.auth.user_id, {
-      credentials: 'include'
+    fetch(URL + 'followingList/' + x.profile.user_id, {
+      credentials: 'include',
+      signal: controller.signal
     })
     .then(res => res.json())
     .then(res => {
-      fetched = true;
       setFollowing(res)
     })
-  }, [fetched])
+
+    return () => {
+      controller.abort()
+    }
+  }, [])
 
   return (
     <>

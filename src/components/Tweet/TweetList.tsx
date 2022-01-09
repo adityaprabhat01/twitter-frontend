@@ -4,20 +4,21 @@ import { fetchTweets, fetchTweetsSuccess, fetchTweetsFailure } from '../../store
 import { URL } from "../../url";
 import Tweet from "./Tweet";
 import { useParams, useHistory } from "react-router";
-import { Box, Center, Container, Divider, Stack, StackDivider } from "@chakra-ui/layout";
+import { Center, Divider, Stack } from "@chakra-ui/layout";
 import { Spinner } from "@chakra-ui/react";
 
 const TweetList = () => {
   const x = useSelector((state: RootStateOrAny) => state)
   const dispatch = useDispatch()
   const params = useParams()
-  const history = useHistory()
   const [loading, setLoading] = useState(true)
   type NoParams = {}
   type Params = { user_name: string }
   function isParams(params: Params | NoParams): params is Params {
     return (params as Params).user_name !== undefined
   }
+  const history = useHistory()
+  const controller = new AbortController()
 
   useEffect(() => {
     if(isParams(params)) {
@@ -32,7 +33,8 @@ const TweetList = () => {
             user_id: x.auth.user_name === params.user_name ? x.auth.user_id : '',
             user_name: params.user_name
           }),
-          credentials: 'include'
+          credentials: 'include',
+          signal: controller.signal
         }),
 
         fetch(URL + 'ownRetweetedTweets', {
@@ -44,7 +46,8 @@ const TweetList = () => {
             user_id: x.auth.user_name === params.user_name ? x.auth.user_id : '',
             user_name: params.user_name
           }),
-          credentials: 'include'
+          credentials: 'include',
+          signal: controller.signal
         })
       ])
       .then(responses =>
@@ -60,6 +63,11 @@ const TweetList = () => {
       .catch(err => {
         console.log(err)
       })
+    }
+
+    return () => {
+      controller.abort()
+      setLoading(true)
     }
   }, [history.location.pathname])
   

@@ -4,14 +4,15 @@ import {
   homeAddRetweetedTweets,
   homeRemoveRetweetedTweets,
 } from "../../store/home/homeAction";
-import { Box, Button } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 
 const Retweet = (props) => {
   const x = useSelector((state: RootStateOrAny) => state);
   const { tweet } = props;
-  const { following_id, tweet_id, author_id } = tweet;
+  const { tweet_id, author_id } = tweet;
   const retweetedStatus = x.home.retweeted;
   const dispatch = useDispatch();
+
   function handleRetweet() {
     fetch(URL + "retweet", {
       method: "POST",
@@ -55,7 +56,7 @@ const Retweet = (props) => {
     })
       .then((res) => res.json())
       .then((res) => {
-        const { tweet_id, status } = res;
+        const { tweet_id } = res;
         dispatch(homeRemoveRetweetedTweets(tweet_id));
       })
       .catch((err) => {

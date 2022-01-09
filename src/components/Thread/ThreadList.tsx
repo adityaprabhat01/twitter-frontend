@@ -1,19 +1,20 @@
 import { useEffect, useState } from "react";
 import { URL } from "../../url"
-import { useParams, useHistory } from 'react-router';
+import { useParams } from 'react-router';
 import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
 import { fetchThread, fetchThreadFailure, fetchThreadSuccess } from "../../store/thread/threadAction";
 import Tweet from "../Tweet/Tweet";
 import ShowComment from "../Comment/ShowComment";
-import { collection, doc, setDoc, getFirestore, query, where, getDocs } from "firebase/firestore"; 
+import { collection, getFirestore, query, where, getDocs } from "firebase/firestore"; 
 import { Spinner } from "@chakra-ui/react";
 
 const ThreadList = () => {
   const params = useParams()
-  const history = useHistory()
   const dispatch = useDispatch()
   const x = useSelector((state: RootStateOrAny) => state)
   const [loading, setLoading] = useState(true)
+  const controller = new AbortController()
+
   useEffect(() => {
     type Params = { tweet_id: string };
     type NoParams = {};
@@ -23,7 +24,8 @@ const ThreadList = () => {
     if(isParams(params))  {
       dispatch(fetchThread())
       fetch(URL + 'fetchThread/' + params.tweet_id, {
-        credentials: 'include'
+        credentials: 'include',
+        signal: controller.signal
       })
       .then(res => res.json())
       .then(async (res) => {
@@ -38,9 +40,12 @@ const ThreadList = () => {
       .catch(err => {
         dispatch(fetchThreadFailure())
       })
-      
     }
-  }, [history.location.pathname])
+
+    return () => {
+      controller.abort()
+    }
+  }, [])
 
   return (
     <>

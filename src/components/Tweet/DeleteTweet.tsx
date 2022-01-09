@@ -1,4 +1,4 @@
-import { Box, Button } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import { URL } from "../../url";
 import { useSelector, RootStateOrAny, useDispatch } from "react-redux";
 import { updateDeletedTweet } from "../../store/tweet/tweetAction";
@@ -6,6 +6,7 @@ import { updateDeletedTweet } from "../../store/tweet/tweetAction";
 const DeleteTweet = (props) => {
   const x = useSelector((state: RootStateOrAny) => state);
   const dispatch = useDispatch();
+  
   function handleDelete() {
     fetch(URL + "deleteTweet", {
       method: "POST",

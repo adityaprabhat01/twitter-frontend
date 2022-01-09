@@ -5,6 +5,7 @@ import { setFollowing } from "../../store/profile/profileAction";
 const Follow = () => {
   const x = useSelector((state: RootStateOrAny) => state)
   const dispatch = useDispatch()
+  
   function handleFollow() {
     fetch(URL + '/follow', {
       method: 'POST',
