@@ -42,7 +42,6 @@ const CommentTextArea = (props) => {
           setCount(res.comment_count);
         });
       obj["_id"] = docRef.id;
-      console.log(obj);
       dispatch(postCommentThread(obj));
       dispatch(homePostComment(obj));
       dispatch(postComment(obj));
@@ -54,7 +53,7 @@ const CommentTextArea = (props) => {
 
   return (
     <>
-      <Box mt={"4"} onClick={handleToggle}>
+      <Box onClick={handleToggle}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           x="0px"

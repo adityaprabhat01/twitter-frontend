@@ -1,6 +1,7 @@
 import { URL } from "../../url";
 import { useSelector, RootStateOrAny, useDispatch } from "react-redux";
 import { setFollowing } from "../../store/profile/profileAction";
+import { Button } from "@chakra-ui/react";
 
 const Follow = () => {
   const x = useSelector((state: RootStateOrAny) => state)
@@ -45,9 +46,11 @@ const Follow = () => {
   return (
     <div>
       {
-        x.profile.following === false ?
-        <button onClick={handleFollow}>Follow</button> :
-        <button onClick={handleUnfollow}>Unfollow</button>
+        (x.profile.user_name !== x.auth.user_name) && x.profile.user_name !== '' ?
+        (x.profile.following === false ?
+        <Button onClick={handleFollow}>Follow</Button> :
+        <Button onClick={handleUnfollow}>Unfollow</Button>) :
+        ''
       }
     </div>
   )

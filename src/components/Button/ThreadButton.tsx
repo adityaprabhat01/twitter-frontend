@@ -5,8 +5,8 @@ import { Link } from "react-router-dom"
 const ThreadButton = (props) => {
   return (
     <>
-      <Link to={`/thread/${props.tweet.tweet_id}`}>
-        <Button mt={4}>Thread</Button>
+      <Link to={`/thread/${props.tweet.user_id}/${props.tweet.tweet_id}`}>
+        <Button>Thread</Button>
       </Link>
     </>
   )

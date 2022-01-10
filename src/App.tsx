@@ -23,10 +23,10 @@ const App = () => {
               <Route exact path="/signin" component={SignIn} />
               <Route exact path="/homepage" component={Homepage} />
               <Route exact path="/profile/:user_name" component={Profile} />
-              <Route exact path="/thread/:tweet_id" component={Thread} />
-              <Route exact path="/followersList" component={FollowersList} />
-              <Route exact path="/followingList" component={FollowingList} />
-              <Route exact path="/likedTweetsList" component={LikedTweetsList} />
+              <Route exact path="/thread/:user_id/:tweet_id" component={Thread} />
+              <Route exact path="/followersList/:user_id" component={FollowersList} />
+              <Route exact path="/followingList/:user_id" component={FollowingList} />
+              <Route exact path="/likedTweetsList/:user_id" component={LikedTweetsList} />
             </BrowserRouter>
           </Provider>
       </ChakraProvider>

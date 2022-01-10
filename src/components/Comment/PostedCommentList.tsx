@@ -7,12 +7,11 @@ const PostedCommentList = (props) => {
   const { pathname } = location
   return (
     <>
-
-    { 
-      pathname === '/homepage' || pathname.includes('/profile') === true ?
-      tweet.comments.map(comment => <PostedComment comment={comment} />) :
-      null
-    }
+      { 
+        pathname === '/homepage' || pathname.includes('/profile') === true  || pathname.includes('/thread') === true?
+        tweet.comments.map(comment => <PostedComment comment={comment} />) :
+        null
+      }
     </>
   )
 }

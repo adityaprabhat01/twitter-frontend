@@ -1,3 +1,5 @@
+import { Box } from "@chakra-ui/layout";
+import { Button, Textarea } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { useSelector, useDispatch, RootStateOrAny } from "react-redux";
 import { postTweet, postTweetSuccess, postTweetFailure } from "../../store/tweet/tweetAction";
@@ -38,10 +40,10 @@ const TweetArea = () => {
   }
 
   return (
-    <div>
-      <textarea onChange={handleTweetArea} />
-      <button onClick={handleSubmitTweetArea}>Tweet</button>
-    </div>
+    <Box minWidth={'600px'}>
+      <Textarea onChange={handleTweetArea} />
+      <Button mt={2} onClick={handleSubmitTweetArea}>Tweet</Button>
+    </Box>
   )
 }
 

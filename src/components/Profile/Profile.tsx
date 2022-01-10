@@ -11,6 +11,8 @@ import Followers from '../Button/Followers';
 import Following from '../Button/Following';
 import LikedTweetsButton from '../Button/LikedTweetButton';
 import useAuthCookies from '../../hooks/useAuthCookies';
+import { Center, Grid, VStack } from '@chakra-ui/layout';
+import LogOut from '../Auth/LogOut';
 
 const Profile = () => {
   const x = useSelector((state: RootStateOrAny) => state)
@@ -81,26 +83,42 @@ const Profile = () => {
 
 
   return (
-    <div>
-      Profile
-      <SearchBar />
-      {
-        x.auth.user_name !== x.profile.user_name ? <Follow />  : null
-      }
+    <>
+      <Grid templateColumns='repeat(3, 1fr)' gap={6} mt={4} mb={4}>
+        <VStack>
+          {
+            x.auth.user_name !== x.profile.user_name ? <Follow />  : null
+          }
+          <Followers user_id={x.profile.user_id} />
+          <Following user_id={x.profile.user_id} />
+          <LikedTweetsButton user_id={x.profile.user_id} />
+          <LogOut />
+        </VStack>
+        <VStack>
+          {
+            x.auth.user_name === x.profile.user_name ? <TweetArea />  : null
+          }
+          <TweetList />
+        </VStack>
+        <VStack>
+          <SearchBar />
+        </VStack>
+        
+      </Grid>
+      <Center>
+        <VStack>
+          Profile
 
-      { x.profile.name }
-      { x.profile.user_name }
+          { x.profile.name }
+          { x.profile.user_name }
+          
 
-      <Followers />
-      <Following />
-      <LikedTweetsButton />
-
-      {
-        x.auth.user_name === x.profile.user_name ? <TweetArea />  : null
-      }
-
-      <TweetList />
-    </div>
+          
+        </VStack>
+        
+      </Center>
+      
+    </>
   )
 }
 

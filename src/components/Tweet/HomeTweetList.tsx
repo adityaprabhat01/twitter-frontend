@@ -3,6 +3,7 @@ import { Spinner } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { useSelector, RootStateOrAny, useDispatch } from "react-redux";
 import { useHistory } from "react-router";
+import useLikedTweets from "../../hooks/useLikedTweets";
 import { homeFetchTweets, homeFetchTweetsSuccess, homeLikedTweets, homeRetweetedTweets } from "../../store/home/homeAction";
 import { URL } from "../../url";
 import Tweet from "./Tweet";
@@ -13,69 +14,11 @@ const HomeTweetList = () => {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(true)
   const controller = new AbortController()
-
-  function mapToObject(tweets, type) {
-    let obj = {}
-    if(type === 'liked') {
-      tweets.map(tweet => {
-        let temp = {
-          tweet_id: tweet.tweet_id,
-          liked: true,
-        }
-        obj[tweet.tweet_id] = temp;
-      })
-    }
-    else if(type === 'retweeted') {
-      tweets.map(tweet => {
-        let temp = {
-          tweet_id: tweet.tweet_id,
-          retweeted: true,
-        }
-        obj[tweet.tweet_id] = temp;
-      })
-    }
-    return obj;
-  }
+  const user_id = x.auth.user_id
+  useLikedTweets(user_id)
 
   useEffect(() => {
     dispatch(homeFetchTweets());
-    Promise.all([
-      fetch(URL + 'allLiked', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          user_id: x.auth.user_id
-        }),
-        credentials: 'include',
-        signal: controller.signal
-      }),
-
-      fetch(URL + 'allRetweeted', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          user_id: x.auth.user_id
-        }),
-        credentials: 'include',
-        signal: controller.signal
-      })
-    ])
-    .then(responses =>
-        Promise.all(responses.map(res => res.json()))
-      ).then(res => {
-        const obj_liked = mapToObject(res[0], 'liked')
-        const obj_retweeted = mapToObject(res[1], 'retweeted')
-        dispatch(homeLikedTweets(obj_liked));
-        dispatch(homeRetweetedTweets(obj_retweeted));
-    })
-    .catch(err => {
-      console.log(err)
-    })
-
     fetch(URL + 'homeTweets', {
       method: 'POST',
       headers: {
@@ -84,7 +27,8 @@ const HomeTweetList = () => {
       body: JSON.stringify({
         user_id: x.auth.user_id
       }),
-      credentials: 'include'
+      credentials: 'include',
+      signal: controller.signal
     })
     .then(res => res.json())
     .then(res => {
@@ -129,26 +73,28 @@ const HomeTweetList = () => {
   return (
     <>
       <Center>
-        <Stack border={'2px'} alignItems={"center"} spacing={4} maxWidth={'600px'}>
-          <div>TweetList</div>
-          {
-            loading === true ? <Spinner
-            thickness='4px'
-            speed='0.65s'
-            emptyColor='gray.200'
-            color='blue.500'
-            size='xl'
-          /> :
-            x.home.tweets.map(tweet => {
-              return (
-                <>
-                  <Tweet tweet={tweet} />
-                  <Divider />
-                </>
-              )
-            })
-          }
-        </Stack>
+        {
+          loading === true ? <Spinner
+          thickness='4px'
+          speed='0.65s'
+          emptyColor='gray.200'
+          color='blue.500'
+          size='xl'
+        /> :
+          <Stack border={'2px'} alignItems={"center"} maxWidth={'600px'}>
+              {
+                x.home.tweets.map(tweet => {
+                  return (
+                    <>
+                      <Tweet tweet={tweet} />
+                      <Divider />
+                    </>
+                  )
+                })
+              }
+          </Stack>
+        }
+        
       </Center>
     </>
   )

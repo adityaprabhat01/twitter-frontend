@@ -1,3 +1,4 @@
+import { Button, FormControl, Input } from "@chakra-ui/react"
 import { SetStateAction, useState } from "react"
 import { useHistory } from "react-router"
 import { URL } from "../../url"
@@ -24,11 +25,13 @@ const SearchBar = () => {
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
-        <input onChange={handleValue} type="text" id="value" />
+      <FormControl onSubmit={handleSubmit} maxWidth={'300px'}>
+        <Input onChange={handleValue} type="text" id="value" />
         <br />
-        <input type="submit" value="Submit" />
-      </form>
+        <Button mt={2} onClick={handleSubmit} type="submit" value="Submit">
+          Search
+        </Button>
+      </FormControl>
     </>
   )
 }

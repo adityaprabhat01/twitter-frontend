@@ -1,6 +1,6 @@
 import Like from "../Like/Like";
 import Retweet from "../Retweet/Retweet";
-import { Box, Flex } from "@chakra-ui/react"
+import { Box, Flex, Link } from "@chakra-ui/react"
 import ThreadButton from "../Button/ThreadButton";
 import DeleteTweet from "./DeleteTweet";
 import Comment from "../Comment/Comment";
@@ -28,8 +28,11 @@ const Tweet = (props: any) => {
   return (
     <Box minWidth={'600px'} padding={2}>
       <span onClick={handleSubmit}>
-        <b>{ tweet.name }</b>&nbsp;
-        <b>{ tweet.username }</b>
+        <Link>
+          <b>{ tweet.name }</b>&nbsp;
+        </Link>
+        <br />
+        <Link color={'#718096'}>@{ tweet.username }</Link>
       </span>
       <br />
       { tweet.tweet }

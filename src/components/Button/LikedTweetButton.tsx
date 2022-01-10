@@ -1,10 +1,10 @@
 import { Button } from "@chakra-ui/react";
 import { useHistory } from "react-router";
 
-const LikedTweetsButton = () => {
+const LikedTweetsButton = (props) => {
   const history = useHistory()
   function handleClick() {
-    history.push('/LikedTweetsList');
+    history.push(`/LikedTweetsList/${props.user_id}`);
   }
   return (
     <>

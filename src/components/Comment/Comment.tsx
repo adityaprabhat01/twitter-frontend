@@ -1,4 +1,4 @@
-import { Box } from "@chakra-ui/layout";
+import { Box, HStack } from "@chakra-ui/layout";
 import { useState } from "react"
 import CommentTextArea from "./CommentTextArea"
 
@@ -8,12 +8,15 @@ const Comment = (props) => {
 
   return (
     <>
-      <CommentTextArea props={props} setCount={setCount} count={count} />
-      <Box mt={4}>
-        {
-          count 
-        }
-      </Box>
+      <HStack>
+        <CommentTextArea props={props} setCount={setCount} count={count} />
+        <Box as='span'>
+          {
+            count 
+          }
+        </Box>
+      </HStack>
+      
     </>
   )
 }

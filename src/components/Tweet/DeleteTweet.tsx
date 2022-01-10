@@ -28,7 +28,7 @@ const DeleteTweet = (props) => {
   }
   return (
     <>
-      <Box mt={4} onClick={handleDelete}>
+      <Box onClick={handleDelete}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           x="0px"
