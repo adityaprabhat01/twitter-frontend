@@ -5,21 +5,23 @@ import { useSelector, useDispatch, RootStateOrAny } from "react-redux";
 import { postCommentThread } from "../../store/thread/threadAction";
 import { homePostComment } from "../../store/home/homeAction";
 import { postComment } from "../../store/tweet/tweetAction";
-import { collection, addDoc, getFirestore, getDocs } from "firebase/firestore";
+import { collection, addDoc, getFirestore } from "firebase/firestore";
+import { useHistory } from "react-router";
+import { postCommentLikedTweet } from "../../store/liked/likedAction";
 
 const CommentTextArea = (props) => {
   const [toggle, setToggle] = useState(false);
   const [commentText, setCommentText] = useState("");
   const dispatch = useDispatch();
   const x = useSelector((state: RootStateOrAny) => state);
-  const { setCount, count } = props;
+  const { setCount } = props;
   function handleToggle() {
     setToggle(!toggle);
   }
   function handleTextArea(event) {
-    console.log(event.target.value);
     setCommentText(event.target.value);
   }
+  const history = useHistory()
 
   async function postCommentAndCount() {
     const db = getFirestore();
@@ -38,13 +40,22 @@ const CommentTextArea = (props) => {
       })
         .then((res) => res.json())
         .then((res) => {
-          console.log(res.comment_count);
           setCount(res.comment_count);
         });
       obj["_id"] = docRef.id;
-      dispatch(postCommentThread(obj));
-      dispatch(homePostComment(obj));
-      dispatch(postComment(obj));
+      const pathname = history.location.pathname;
+      if(pathname.includes('homepage')) {
+        dispatch(homePostComment(obj)); // when a comment is posted on homepage
+      } else if(pathname.includes('thread')) {
+        dispatch(postCommentThread(obj)); // when a comment is posted from thread route
+      } else if(pathname.includes('profile')) {
+        dispatch(postComment(obj)); // when a comment is posted on profile
+      } else if(pathname.includes('LikedTweetsList')) {
+        dispatch(postCommentLikedTweet(obj)) // when a comment is posted on likedTweetList
+      }
+      
+      
+      
       setToggle(!toggle);
     } catch (e) {
       console.error("Error adding document: ", e);

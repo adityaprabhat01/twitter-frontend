@@ -13,6 +13,7 @@ import LikedTweetsButton from '../Button/LikedTweetButton';
 import useAuthCookies from '../../hooks/useAuthCookies';
 import { Center, Grid, VStack } from '@chakra-ui/layout';
 import LogOut from '../Auth/LogOut';
+import PictureUploadButton from '../Button/PictureUploadButton';
 
 const Profile = () => {
   const x = useSelector((state: RootStateOrAny) => state)
@@ -92,6 +93,7 @@ const Profile = () => {
           <Followers user_id={x.profile.user_id} />
           <Following user_id={x.profile.user_id} />
           <LikedTweetsButton user_id={x.profile.user_id} />
+          <PictureUploadButton />
           <LogOut />
         </VStack>
         <VStack>
