@@ -1,6 +1,15 @@
 import { FETCH_PROFILE, FETCH_PROFILE_SUCCESS, FETCH_PROFILE_FAILURE, SET_FOLLOWING } from "./profileType"
 
-const initState = {
+interface initStateInterface {
+  user_id: string,
+  user_name: string,
+  loading: string,
+  error: string,
+  name: string,
+  following: boolean
+}
+
+const initState: initStateInterface = {
   user_id: '',
   user_name: '',
   loading: '',

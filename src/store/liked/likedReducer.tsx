@@ -1,19 +1,27 @@
 import { FETCH_LIKED, FETCH_LIKED_SUCCESS, FETCH_LIKE_FAILURE, POST_COMMENT_LIKED_TWEET } from "./likedType"
 
-const initeState = {
-  tweet_data: [{
-    following_id: '',
-    tweet_id: '',
-    tweet: '',
-    posted_on: '',
-    likes_count: '',
-    retweet_count: '',
-    name: '',
-    email: '',
-    username: '',
-    author_id: '',
-    comments: []
-  }],
+interface tweetDaataIteminterface {
+  following_id: string,
+  tweet_id: string,
+  tweet: string,
+  posted_on: string,
+  likes_count: number,
+  retweet_count: number,
+  name: string,
+  email: string,
+  username: string,
+  author_id: string,
+  comments: Array<any>
+}
+
+interface initStateInterface {
+  tweet_data: Array<tweetDaataIteminterface>,
+  loading: boolean,
+  error: string
+}
+
+const initeState: initStateInterface = {
+  tweet_data: [],
   loading: false,
   error: ''
 }

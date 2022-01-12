@@ -4,6 +4,7 @@ import { URL } from "../../url";
 
 const UserDetails = (props) => {
   const history = useHistory()
+  
   function handleSubmit(event: { preventDefault: () => void }) {
     event.preventDefault();
     fetch(URL + 'checkExistence/' + props.user.username, {

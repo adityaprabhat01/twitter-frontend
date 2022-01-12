@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { signInAction, fetchUser } from "../../store/auth/authAction";
 import { useHistory } from "react-router-dom";
 import { Button, Flex, FormControl, Input } from "@chakra-ui/react";
@@ -10,7 +10,6 @@ const SignIn = () => {
   const [password, setPassword] = useState('');
   const dispatch = useDispatch()
   const history = useHistory()
-  const x = useSelector(state => state)
 
   function handleEmail(event: { target: { value: React.SetStateAction<string>; }; }) {
     setEmail(event.target.value)

@@ -1,16 +1,27 @@
 import { POST_TWEET, POST_TWEET_FAILURE, POST_TWEET_SUCCESS, FETCH_TWEETS, FETCH_TWEETS_SUCCESS, FETCH_TWEETS_FAILURE, UPDATE_DELETED_TWEET, POST_COMMENT } from "./tweetTypes";
 
-const initState = {
-  tweet_data: [{
-    tweet: '',
-    tweet_id: '',
-    comments: []
-  }],
-  retweet_data: [{
-    tweet: '',
-    tweet_id: '',
-    comments: []
-  }],
+interface tweet_data_interface {
+  tweet: string,
+  tweet_id: string,
+  comments: Array<any>
+}
+
+interface retweet_data_interface {
+  tweet: string,
+  tweet_id: string,
+  comments: Array<any>
+}
+
+interface initStateInterface {
+  tweet_data: Array<tweet_data_interface>,
+  retweet_data: Array<retweet_data_interface>,
+  loading: boolean,
+  error: string
+}
+
+const initState: initStateInterface = {
+  tweet_data: [],
+  retweet_data: [],
   loading: false,
   error: ''
 }

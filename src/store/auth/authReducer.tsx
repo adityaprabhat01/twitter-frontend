@@ -1,7 +1,14 @@
-import React from "react"
 import { SIGN_IN, FETCH_USER, FETCH_USER_FAILURE, SET_AUTH_FROM_COOKIES } from "./authType"
 
-const initState = {
+interface initStateInterface {
+  user_id: string,
+  user_name: string,
+  loading: boolean,
+  error: string,
+  name: string
+}
+
+const initState: initStateInterface = {
   user_id: '',
   user_name: '',
   loading: false,

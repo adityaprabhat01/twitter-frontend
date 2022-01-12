@@ -12,7 +12,6 @@ import ProfilePicture from "../Profile/ProfilePicture";
 const Tweet = (props: any) => {
   const { tweet } = props;
   const history = useHistory()
-  console.log(tweet)
   function handleSubmit(event: { preventDefault: () => void }) {
     event.preventDefault();
     fetch(URL + 'checkExistence/' + tweet.username, {

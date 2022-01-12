@@ -1,6 +1,13 @@
 import { FETCH_THREAD, FETCH_THREAD_FAILURE, FETCH_THREAD_SUCCESS, POST_COMMENT_THREAD } from "./threadType"
 
-const initState = {
+interface initStateInterface {
+  tweet: object,
+  comments: Array<any>,
+  loading: boolean,
+  error: string
+}
+
+const initState: initStateInterface = {
   tweet: {},
   comments: [],
   loading: false,
