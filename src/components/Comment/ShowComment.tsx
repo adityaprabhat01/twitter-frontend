@@ -26,7 +26,7 @@ const ShowComment = (props) => {
   }
 
   return (
-    <Box border={"2px"} minWidth={"600px"} padding={2}>
+    <Box minWidth={"600px"} padding={2}>
       <User
         user_id={undefined}
         author_id={data.author_id}

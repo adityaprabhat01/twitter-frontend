@@ -5,6 +5,11 @@ import { useSelector, useDispatch } from "react-redux";
 import { postTweet, postTweetSuccess } from "../../store/tweet/tweetAction";
 
 import { URL } from "../../url";
+import TwitterButton from "../UI/TwitterButton";
+
+const style = {
+  mt: 2
+}
 
 const TweetArea = () => {
   const handleSelector = (state) => {
@@ -48,7 +53,7 @@ const TweetArea = () => {
   return (
     <Box minWidth={'600px'}>
       <Textarea onChange={handleTweetArea} />
-      <Button mt={2} onClick={handleSubmitTweetArea}>Tweet</Button>
+      <TwitterButton method={handleSubmitTweetArea} text={"Tweet"} style={style} />
     </Box>
   )
 }

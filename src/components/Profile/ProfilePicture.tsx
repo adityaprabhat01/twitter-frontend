@@ -37,7 +37,7 @@ const ProfilePicture = (props) => {
         borderRadius="full"
         boxSize="50px"
         src=""
-        alt="Dan Abramov"
+        alt="profile"
       />
     </>
   );

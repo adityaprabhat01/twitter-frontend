@@ -2,6 +2,7 @@ import { Button } from "@chakra-ui/react"
 import { useRef, useState } from "react"
 import { getStorage, ref, uploadBytes } from "firebase/storage";
 import { useSelector } from "react-redux";
+import TwitterButton from "../UI/TwitterButton";
 
 const PictureUploadButton = () => {
   const [show, setShow] = useState(false)
@@ -30,16 +31,12 @@ const PictureUploadButton = () => {
   
   return (
     <>
-      <Button onClick={handleOenFileSelector}>
-        Choose Photo
-      </Button>
+      <TwitterButton method={handleOenFileSelector} text={'Photo'} />
       {
         show === true ?
         <>
           <input ref={inputRef} className="ml-3" style={{ backgroundColor: "#e2e6e9", width: "15em" }} type="file" name="photo" id="upload-file" />
-          <Button onClick={handleUploadPhoto}>
-            Upload
-          </Button>
+          <TwitterButton method={handleUploadPhoto} text={'Upload'} />
         </> :
         null
       }

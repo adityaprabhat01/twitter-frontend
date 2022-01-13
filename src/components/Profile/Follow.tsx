@@ -2,6 +2,7 @@ import { URL } from "../../url";
 import { useSelector, useDispatch } from "react-redux";
 import { setFollowing } from "../../store/profile/profileAction";
 import { Button } from "@chakra-ui/react";
+import TwitterButton from "../UI/TwitterButton";
 
 const Follow = () => {
   const handleSelector = (state) => {
@@ -56,8 +57,8 @@ const Follow = () => {
       {
         (store.profile_user_name !== store.user_name) && store.profile_user_name !== '' ?
         (store.following === false ?
-        <Button onClick={handleFollow}>Follow</Button> :
-        <Button onClick={handleUnfollow}>Unfollow</Button>) :
+        <TwitterButton method={handleFollow} text={"Follow"} /> :
+        <TwitterButton method={handleUnfollow} text={"Unfollow"} />) :
         ''
       }
     </div>

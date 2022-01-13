@@ -1,6 +1,7 @@
 import { Button } from "@chakra-ui/react"
 import { useHistory } from "react-router";
 import { URL } from "../../url";
+import TwitterButton from "../UI/TwitterButton";
 
 const LogOut = () => {
   const history = useHistory()
@@ -16,9 +17,7 @@ const LogOut = () => {
   }
   return (
     <>
-      <Button onClick={handleLogOut}>
-        Logout
-      </Button>
+      <TwitterButton method={handleLogOut} text={"Logout"} />
     </>
   )
 }

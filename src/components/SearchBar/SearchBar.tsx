@@ -1,7 +1,12 @@
-import { Button, FormControl, Input } from "@chakra-ui/react"
+import { FormControl, Input } from "@chakra-ui/react"
 import { SetStateAction, useState } from "react"
 import { useHistory } from "react-router"
 import { URL } from "../../url"
+import TwitterButton from "../UI/TwitterButton"
+
+const style = {
+  mt: 2
+}
 
 const SearchBar = () => {
   const [user_name, setUser_name] = useState('')
@@ -28,9 +33,7 @@ const SearchBar = () => {
       <FormControl onSubmit={handleSubmit} maxWidth={'300px'}>
         <Input onChange={handleValue} type="text" id="value" />
         <br />
-        <Button mt={2} onClick={handleSubmit} type="submit" value="Submit">
-          Search
-        </Button>
+        <TwitterButton method={handleSubmit} text={"Search"} style={style} />
       </FormControl>
     </>
   )

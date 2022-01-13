@@ -73,7 +73,7 @@ const HomeTweetList = () => {
         {isLoading === true ? (
           <Loading />
         ) : (
-          <Stack border={"2px"} alignItems={"center"} maxWidth={"600px"}>
+          <Stack border={"2px"} borderColor={"#1d9af9"} borderRadius={'10px'}  alignItems={"center"} maxWidth={"600px"}>
             {store.tweets.map((tweet) => {
               return (
                 <>

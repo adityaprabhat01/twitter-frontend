@@ -12,7 +12,7 @@ import Followers from "../Button/Followers";
 import Following from "../Button/Following";
 import LikedTweetsButton from "../Button/LikedTweetButton";
 import useAuthCookies from "../../hooks/useAuthCookies";
-import { Center, Grid, VStack } from "@chakra-ui/layout";
+import { Box, Center, Grid, Heading, HStack, VStack } from "@chakra-ui/layout";
 import LogOut from "../Auth/LogOut";
 import PictureUploadButton from "../Button/PictureUploadButton";
 import axios from "axios";
@@ -95,11 +95,14 @@ const Profile = () => {
           <LogOut />
         </VStack>
         <VStack>
-          Profile
-          <span>
-            {store.profile_name}
-            {store.profile_user_name}
-          </span>
+          <Box ml={0}>
+            <HStack>
+              <VStack>
+              <Heading>{store.profile_name}</Heading>
+              <Heading as='h6' size='s' color={'#718096'}>@{store.profile_user_name}</Heading>
+              </VStack>
+            </HStack>
+          </Box>
           {store.user_name === store.profile_user_name ? <TweetArea /> : null}
           <TweetList />
         </VStack>

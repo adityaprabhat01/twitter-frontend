@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { URL } from "../../url";
-import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   fetchThread,
   fetchThreadFailure,
@@ -15,7 +15,7 @@ import {
   where,
   getDocs,
 } from "firebase/firestore";
-import { Box, Center, VStack } from "@chakra-ui/react";
+import { Box, Center, Divider, Stack, VStack } from "@chakra-ui/react";
 import useLikedTweets from "../../hooks/useLikedTweets";
 import useAuthCookies from "../../hooks/useAuthCookies";
 import useCheckParams from "../../hooks/useCheckParams";
@@ -32,7 +32,9 @@ const ThreadList = () => {
   const dispatch = useDispatch();
 
   const [loading, setLoading] = useState(true);
-  const controller = new AbortController();
+  const controller = useMemo(() => {
+    return new AbortController()
+  }, [])
 
   useAuthCookies();
   useLikedTweets(store.user_id);
@@ -61,7 +63,7 @@ const ThreadList = () => {
     return () => {
       controller.abort();
     };
-  }, []);
+  }, [controller, dispatch, tweet_id]);
 
   return (
     <>
@@ -72,14 +74,20 @@ const ThreadList = () => {
            <Loading />
           ) : (
             <>
-              <Box border={"2px"} alignItems={"center"} maxWidth={"600px"}>
+              <Box border={"2px"} borderColor={"#1d9af9"} borderRadius={'10px'} alignItems={"center"} maxWidth={"600px"}>
                 <Tweet tweet={store.tweets} />
               </Box>
-              <VStack>
+              <Stack border={"2px"} borderColor={"#1d9af9"} borderRadius={'10px'} alignItems={"center"} maxWidth={"600px"}>
                 {store.comments.map((comment) => {
-                  return <ShowComment comment={comment} />;
+                  return (
+                    <>
+                      <ShowComment comment={comment} />
+                      <Divider />
+                    </>
+                   
+                  );
                 })}
-              </VStack>
+              </Stack>
             </>
           )}
         </VStack>

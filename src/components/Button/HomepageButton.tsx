@@ -1,5 +1,5 @@
-import { Button } from "@chakra-ui/react"
 import { useHistory } from "react-router"
+import TwitterButton from "../UI/TwitterButton"
 
 const HomepageButton = (props) => {
   const history = useHistory()
@@ -8,9 +8,7 @@ const HomepageButton = (props) => {
   }
   return (
     <>
-      <Button onClick={handleHomepage}>
-        Homepage
-      </Button>
+      <TwitterButton method={handleHomepage} text={'Homepage'} />
     </>
   )
 }

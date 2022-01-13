@@ -8,6 +8,7 @@ import PostedCommentList from "../Comment/PostedCommentList";
 import { useHistory } from "react-router";
 import { URL } from "../../url";
 import User from "../UI/User";
+import moment from 'moment';
 
 const Tweet = (props: any) => {
   const { tweet } = props;
@@ -25,6 +26,7 @@ const Tweet = (props: any) => {
       });
   }
 
+  const ago = moment(tweet.posted_on).fromNow()
   return (
     <Box minWidth={"600px"} padding={2}>
       <User
@@ -34,11 +36,12 @@ const Tweet = (props: any) => {
         user_name={tweet.username}
         tweet_id={tweet.tweet_id}
         handleSubmit={handleSubmit}
+        ago={ago}
       />
-      <br />
-      {tweet.tweet}
-      <br />
-      <Flex justifyContent="space-between">
+      <Box mt={1}>
+        {tweet.tweet}
+      </Box>
+      <Flex mt={1} justifyContent="space-between">
         <Like tweet={tweet} />
         <Retweet tweet={tweet} />
         <Comment tweet={tweet} />
