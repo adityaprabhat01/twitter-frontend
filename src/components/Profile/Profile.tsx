@@ -18,6 +18,7 @@ import PictureUploadButton from "../Button/PictureUploadButton";
 import axios from "axios";
 import useCheckParams from "../../hooks/useCheckParams";
 import { URL } from "../../url";
+import HomepageButton from "../Button/HomepageButton";
 
 const api = axios.create({
   baseURL: URL,
@@ -89,6 +90,7 @@ const Profile = () => {
           <Followers user_id={store.profile_user_id} />
           <Following user_id={store.profile_user_id} />
           <LikedTweetsButton user_id={store.profile_user_id} />
+          <HomepageButton />
           <PictureUploadButton />
           <LogOut />
         </VStack>

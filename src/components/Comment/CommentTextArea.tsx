@@ -12,8 +12,8 @@ import { postCommentLikedTweet } from "../../store/liked/likedAction";
 const CommentTextArea = (props) => {
   const handleSelector = (state) => {
     const user_id = state.auth.user_id
-    const name = state.auth.user_name
-    const user_name = state.auth.name
+    const name = state.auth.name
+    const user_name = state.auth.user_name
     return { user_id, user_name, name }
   }
   const store = useSelector(handleSelector)

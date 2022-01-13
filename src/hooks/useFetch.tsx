@@ -5,7 +5,7 @@ const useFetch = (options, handlePostFetch, postData) => {
   const [data, setData] = useState<any>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<any>(null);
-  const [shouldRefetch, reFetch] = useState({});
+  const [shouldRefetch, reFetch] = useState(false);
 
   const source = axios.CancelToken.source();
 
