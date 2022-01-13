@@ -1,10 +1,18 @@
 import { URL } from "../../url";
-import { useSelector, RootStateOrAny, useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { setFollowing } from "../../store/profile/profileAction";
 import { Button } from "@chakra-ui/react";
 
 const Follow = () => {
-  const x = useSelector((state: RootStateOrAny) => state)
+  const handleSelector = (state) => {
+    const user_id = state.auth.user_id
+    const profile_user_id = state.profile.user_id
+    const user_name = state.auth.name
+    const profile_user_name = state.profile.user_name
+    const following = state.profile.following
+    return { user_id, user_name, profile_user_id, profile_user_name, following }
+  }
+  const store = useSelector(handleSelector)
   const dispatch = useDispatch()
   
   function handleFollow() {
@@ -14,8 +22,8 @@ const Follow = () => {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        follower_id: x.auth.user_id,
-        following_id: x.profile.user_id
+        follower_id: store.user_id,
+        following_id: store.profile_user_id
       }),
       credentials: 'include'
     })
@@ -33,8 +41,8 @@ const Follow = () => {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        follower_id: x.auth.user_id,
-        following_id: x.profile.user_id
+        follower_id: store.user_id,
+        following_id: store.profile_user_id
       }),
       credentials: 'include'
     })
@@ -46,8 +54,8 @@ const Follow = () => {
   return (
     <div>
       {
-        (x.profile.user_name !== x.auth.user_name) && x.profile.user_name !== '' ?
-        (x.profile.following === false ?
+        (store.profile_user_name !== store.user_name) && store.profile_user_name !== '' ?
+        (store.following === false ?
         <Button onClick={handleFollow}>Follow</Button> :
         <Button onClick={handleUnfollow}>Unfollow</Button>) :
         ''

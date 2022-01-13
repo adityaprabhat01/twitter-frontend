@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Box, Button, Textarea } from "@chakra-ui/react";
 import { URL } from "../../url";
-import { useSelector, useDispatch, RootStateOrAny } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { postCommentThread } from "../../store/thread/threadAction";
 import { homePostComment } from "../../store/home/homeAction";
 import { postComment } from "../../store/tweet/tweetAction";
@@ -10,27 +10,37 @@ import { useHistory } from "react-router";
 import { postCommentLikedTweet } from "../../store/liked/likedAction";
 
 const CommentTextArea = (props) => {
+  const handleSelector = (state) => {
+    const user_id = state.auth.user_id
+    const name = state.auth.user_name
+    const user_name = state.auth.name
+    return { user_id, user_name, name }
+  }
+  const store = useSelector(handleSelector)
+  const dispatch = useDispatch();
+  const history = useHistory()
+
+  const { setCount } = props;
   const [toggle, setToggle] = useState(false);
   const [commentText, setCommentText] = useState("");
-  const dispatch = useDispatch();
-  const x = useSelector((state: RootStateOrAny) => state);
-  const { setCount } = props;
+  
+  
   function handleToggle() {
     setToggle(!toggle);
   }
   function handleTextArea(event) {
     setCommentText(event.target.value);
   }
-  const history = useHistory()
+  
 
   async function postCommentAndCount() {
     const db = getFirestore();
     try {
       const obj = {
         tweet_id: props.props.tweet.tweet_id,
-        author_id: x.auth.user_id,
-        author_name: x.auth.name,
-        author_username: x.auth.user_name,
+        author_id: store.user_id,
+        author_name: store.name,
+        author_username: store.user_name,
         comment_text: commentText,
         rplies: [],
       };

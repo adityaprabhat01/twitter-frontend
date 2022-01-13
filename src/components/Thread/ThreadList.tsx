@@ -22,13 +22,20 @@ import useCheckParams from "../../hooks/useCheckParams";
 import Loading from "../UI/Loading";
 
 const ThreadList = () => {
+  const handleSelector = (state) => {
+    const user_id = state.auth.user_id
+    const tweets = state.thread.tweet
+    const comments = state.thread.comments
+    return { user_id, tweets, comments }
+  }
+  const store = useSelector(handleSelector)
   const dispatch = useDispatch();
-  const x = useSelector((state: RootStateOrAny) => state);
+
   const [loading, setLoading] = useState(true);
   const controller = new AbortController();
 
   useAuthCookies();
-  useLikedTweets(x.auth.user_id);
+  useLikedTweets(store.user_id);
   const tweet_id = useCheckParams("USER_NAME_TWEET_ID");
 
   useEffect(() => {
@@ -66,10 +73,10 @@ const ThreadList = () => {
           ) : (
             <>
               <Box border={"2px"} alignItems={"center"} maxWidth={"600px"}>
-                <Tweet tweet={x.thread.tweet} />
+                <Tweet tweet={store.tweets} />
               </Box>
               <VStack>
-                {x.thread.comments.map((comment) => {
+                {store.comments.map((comment) => {
                   return <ShowComment comment={comment} />;
                 })}
               </VStack>

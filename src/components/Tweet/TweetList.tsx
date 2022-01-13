@@ -1,69 +1,68 @@
 import { useEffect, useState } from "react";
-import { RootStateOrAny, useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { fetchTweetsSuccess } from "../../store/tweet/tweetAction";
-import { URL } from "../../url";
 import Tweet from "./Tweet";
-import { useHistory } from "react-router";
 import { Center, Divider, Stack } from "@chakra-ui/layout";
 import useLikedTweets from "../../hooks/useLikedTweets";
 import useCheckParams from "../../hooks/useCheckParams";
 import Loading from "../UI/Loading";
+import axios from "axios";
+import { URL } from "../../url";
+
+const api = axios.create({
+  baseURL: URL,
+  withCredentials: true,
+});
+const source = axios.CancelToken.source();
 
 const TweetList = () => {
-  const x = useSelector((state: RootStateOrAny) => state);
+  const handleSelector = (state) => {
+    const user_id = state.auth.user_id
+    const user_name = state.auth.user_name
+    const tweets = state.tweet.tweet_data
+    return { user_id, user_name, tweets }
+  }
+
+  const store = useSelector(handleSelector)
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
-  const history = useHistory();
-  const controller = new AbortController();
 
-  useLikedTweets(x.auth.user_id);
+  useLikedTweets(store.user_id);
   const user_name = useCheckParams("USER_NAME");
 
   useEffect(() => {
-    Promise.all([
-      fetch(URL + "ownTweets", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          user_id: x.auth.user_name === user_name ? x.auth.user_id : "",
+    let unmounted = false;
+    if (!unmounted) {
+      Promise.all([
+        api.post("ownTweets", {
+          user_id: store.user_name === user_name ? store.user_id : "",
           user_name,
         }),
-        credentials: "include",
-        signal: controller.signal,
-      }),
 
-      fetch(URL + "ownRetweetedTweets", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          user_id: x.auth.user_name === user_name ? x.auth.user_id : "",
+        api.post("ownRetweetedTweets", {
+          user_id: store.user_name === user_name ? store.user_id : "",
           user_name,
         }),
-        credentials: "include",
-        signal: controller.signal,
-      }),
-    ])
-      .then((responses) => Promise.all(responses.map((res) => res.json())))
-      .then((res) => {
-        for (let i = 0; i < res[1].length; i++) {
-          res[0].push(res[1][i]);
-        }
-        dispatch(fetchTweetsSuccess(res[0]));
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+      ])
+        .then((responses) => {
+          let res = responses[0].data;
+          for (let i = 0; i < responses[1].data.length; i++) {
+            res.push(responses[1].data[i]);
+          }
+          dispatch(fetchTweetsSuccess(res));
+          setLoading(false);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
 
     return () => {
-      controller.abort();
+      unmounted = true;
+      source.cancel();
       setLoading(true);
     };
-  }, [history.location.pathname]);
+  }, [dispatch, user_name, store.user_id, store.user_name]);
 
   return (
     <>
@@ -72,7 +71,7 @@ const TweetList = () => {
           <Loading />
         ) : (
           <Stack border={"2px"} alignItems={"center"} maxWidth={"600px"}>
-            {x.tweet.tweet_data.map((tweet) => {
+            {store.tweets.map((tweet) => {
               return (
                 <>
                   <Tweet tweet={tweet} />

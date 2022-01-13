@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import { SIGN_IN, FETCH_USER, FETCH_USER_FAILURE, SET_AUTH_FROM_COOKIES } from './authType';
 
 export const signInAction = (data) => {

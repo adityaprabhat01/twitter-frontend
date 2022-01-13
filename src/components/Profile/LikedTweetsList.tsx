@@ -1,4 +1,4 @@
-import { useSelector, RootStateOrAny, useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import Tweet from "../Tweet/Tweet";
 import useAuthCookies from "../../hooks/useAuthCookies";
 import { Center, Divider, Stack } from "@chakra-ui/layout";
@@ -9,11 +9,16 @@ import useCheckParams from "../../hooks/useCheckParams";
 import Loading from "../UI/Loading";
 
 const LikedTweetList = () => {
-  const x = useSelector((state: RootStateOrAny) => state)
+  const handleSelector = (state) => {
+    const user_id = state.auth.user_id
+    const tweets = state.liked.tweet_data
+    return { user_id, tweets }
+  }
+  const store = useSelector(handleSelector)
   const dispatch = useDispatch()
   
   useAuthCookies()
-  useLikedTweets(x.auth.user_id)
+  useLikedTweets(store.user_id)
 
   function handlePostFetch(fetchedData) {
     dispatch(fetchLikedSuccess(fetchedData))
@@ -39,7 +44,7 @@ const LikedTweetList = () => {
           <Stack border={"2px"} alignItems={"center"} maxWidth={'600px'} mt={2} mb={2}>
             Liked Tweets
             {
-              x.liked.tweet_data.map((tweet: any) => {
+              store.tweets.map((tweet: any) => {
                 return (
                   <>
                     <Tweet tweet={tweet} />

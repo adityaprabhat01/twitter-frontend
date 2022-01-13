@@ -1,13 +1,19 @@
 import { Box } from "@chakra-ui/layout";
 import { Button, Textarea } from "@chakra-ui/react";
 import React, { useState } from "react";
-import { useSelector, useDispatch, RootStateOrAny } from "react-redux";
-import { postTweet, postTweetSuccess, postTweetFailure } from "../../store/tweet/tweetAction";
+import { useSelector, useDispatch } from "react-redux";
+import { postTweet, postTweetSuccess } from "../../store/tweet/tweetAction";
 
 import { URL } from "../../url";
 
 const TweetArea = () => {
-  const x = useSelector((state: RootStateOrAny) => state)
+  const handleSelector = (state) => {
+    const user_id = state.auth.user_id
+    const name = state.auth.user_name
+    const user_name = state.auth.name
+    return { user_id, user_name, name }
+  }
+  const store = useSelector(handleSelector)
   const dispatch = useDispatch();
   const [tweet, setTweet] = useState('')
   function handleTweetArea(event) {
@@ -24,10 +30,10 @@ const TweetArea = () => {
       },
       body: JSON.stringify({
         tweet,
-        user_id: x.auth.user_id,
-        author_id: x.auth.user_id,
-        name: x.auth.name,
-        user_name: x.auth.user_name
+        user_id: store.user_id,
+        author_id: store.user_id,
+        name: store.name,
+        user_name: store.user_name
       }),
       credentials: 'include'
     })

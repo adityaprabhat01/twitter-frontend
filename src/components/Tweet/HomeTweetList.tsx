@@ -1,5 +1,5 @@
 import { Center, Divider, Stack } from "@chakra-ui/layout";
-import { useSelector, RootStateOrAny, useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router";
 import useFetch from "../../hooks/useFetch";
 import useLikedTweets from "../../hooks/useLikedTweets";
@@ -8,10 +8,15 @@ import Loading from "../UI/Loading";
 import Tweet from "./Tweet";
 
 const HomeTweetList = () => {
-  const x = useSelector((state: RootStateOrAny) => state);
+  const handleSelector = (state) => {
+    const user_id = state.auth.user_id
+    const tweets = state.home.tweets
+    return { user_id, tweets }
+  }
+  const store = useSelector(handleSelector)
   const history = useHistory();
   const dispatch = useDispatch();
-  useLikedTweets(x.auth.user_id);
+  useLikedTweets(store.user_id);
 
   function handlePostFetch(fetchedData) {
     if (typeof fetchedData === "object" && fetchedData.redirect === true) {
@@ -58,7 +63,7 @@ const HomeTweetList = () => {
     },
     handlePostFetch,
     {
-      user_id: x.auth.user_id,
+      user_id: store.user_id,
     }
   );
 
@@ -69,7 +74,7 @@ const HomeTweetList = () => {
           <Loading />
         ) : (
           <Stack border={"2px"} alignItems={"center"} maxWidth={"600px"}>
-            {x.home.tweets.map((tweet) => {
+            {store.tweets.map((tweet) => {
               return (
                 <>
                   <Tweet tweet={tweet} />

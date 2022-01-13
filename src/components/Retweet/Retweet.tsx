@@ -1,5 +1,5 @@
 import { URL } from "../../url";
-import { useSelector, RootStateOrAny, useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import {
   homeAddRetweetedTweets,
   homeRemoveRetweetedTweets,
@@ -7,11 +7,18 @@ import {
 import { Box, HStack } from "@chakra-ui/react";
 
 const Retweet = (props) => {
-  const x = useSelector((state: RootStateOrAny) => state);
+  const handleSelector = (state) => {
+    const user_id = state.auth.user_id
+    const retweeted = state.home.retweeted
+    return { user_id, retweeted }
+  }
+  const store = useSelector(handleSelector)
+  const dispatch = useDispatch();
+
   const { tweet } = props;
   const { tweet_id, author_id } = tweet;
-  const retweetedStatus = x.home.retweeted;
-  const dispatch = useDispatch();
+  const retweetedStatus = store.retweeted;
+  
 
   function handleRetweet() {
     fetch(URL + "retweet", {
@@ -20,7 +27,7 @@ const Retweet = (props) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        user_id: x.auth.user_id,
+        user_id: store.user_id,
         author_id: author_id,
         tweet_id,
       }),
@@ -48,7 +55,7 @@ const Retweet = (props) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        user_id: x.auth.user_id,
+        user_id: store.user_id,
         author_id: author_id,
         tweet_id,
       }),

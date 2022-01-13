@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useSelector, RootStateOrAny, useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import {
   homeAddLikedTweets,
   homeRemoveLikedTweets,
@@ -8,11 +8,18 @@ import { Box, HStack } from "@chakra-ui/react";
 import { URL } from "../../url";
 
 const Like = (props) => {
-  const x = useSelector((state: RootStateOrAny) => state);
+  const handleSelector = (state) => {
+    const user_id = state.auth.user_id
+    const liked = state.home.liked
+    return { user_id, liked }
+  }
+  const store = useSelector(handleSelector)
+  const dispatch = useDispatch();
+  
   const { tweet } = props;
   const { tweet_id, author_id } = tweet;
-  const likedStatus = x.home.liked;
-  const dispatch = useDispatch();
+  const likedStatus = store.liked;
+  
   const [count, setCount] = useState(tweet.likes_count);
 
   function handleLike() {
@@ -22,7 +29,7 @@ const Like = (props) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        user_id: x.auth.user_id,
+        user_id: store.user_id,
         author_id,
         tweet_id,
       }),
@@ -50,7 +57,7 @@ const Like = (props) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        user_id: x.auth.user_id,
+        user_id: store.user_id,
         author_id,
         tweet_id: tweet_id,
       }),

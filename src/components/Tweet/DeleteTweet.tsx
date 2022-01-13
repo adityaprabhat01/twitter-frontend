@@ -1,10 +1,14 @@
 import { Box } from "@chakra-ui/react";
 import { URL } from "../../url";
-import { useSelector, RootStateOrAny, useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { updateDeletedTweet } from "../../store/tweet/tweetAction";
 
 const DeleteTweet = (props) => {
-  const x = useSelector((state: RootStateOrAny) => state);
+  const handleSelector = (state) => {
+    const user_id = state.auth.user_id
+    return { user_id }
+  }
+  const store = useSelector(handleSelector)
   const dispatch = useDispatch();
   
   function handleDelete() {
@@ -16,7 +20,7 @@ const DeleteTweet = (props) => {
       body: JSON.stringify({
         profile_id: props.tweet.user_id,
         tweet_id: props.tweet.tweet_id,
-        user_id: x.auth.user_id,
+        user_id: store.user_id,
       }),
       credentials: "include",
     })
