@@ -1,10 +1,13 @@
-import { Box, Button } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import { useHistory } from "react-router";
 import { URL } from "../../url";
 import User from "../UI/User";
+import Reply from "./Reply";
+import ShowReply from "./ShowReply";
 
 const ShowComment = (props) => {
-  const { comment } = props;
+  const { comment, tweet_id } = props;
+
   let data;
   if (typeof comment.data === "function") {
     data = comment.data();
@@ -24,7 +27,6 @@ const ShowComment = (props) => {
         }
       });
   }
-
   return (
     <Box minWidth={"600px"} padding={2}>
       <User
@@ -37,8 +39,8 @@ const ShowComment = (props) => {
       />
       <br />
       <Box>{data.comment_text}</Box>
-
-      <Button>Reply</Button>
+      <ShowReply replies={data} tweet_id={tweet_id} comment_id={data.comment_id} id_firestore={comment.id} />
+      {/* <Reply tweet_id={tweet_id} comment_id={data.comment_id} id_firestore={comment.id} /> */}
     </Box>
   );
 };

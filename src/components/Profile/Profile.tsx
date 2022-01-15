@@ -19,6 +19,7 @@ import axios from "axios";
 import useCheckParams from "../../hooks/useCheckParams";
 import { URL } from "../../url";
 import HomepageButton from "../Button/HomepageButton";
+import ProfileImage from "../UI/ProfileImage";
 
 const api = axios.create({
   baseURL: URL,
@@ -85,7 +86,8 @@ const Profile = () => {
   return (
     <>
       <Grid templateColumns="repeat(3, 1fr)" gap={6} mt={4} mb={4}>
-        <VStack>
+        <VStack mt={4}>
+          <ProfileImage user_id={store.user_id} />
           {store.user_name !== store.profile_user_name ? <Follow /> : null}
           <Followers user_id={store.profile_user_id} />
           <Following user_id={store.profile_user_id} />

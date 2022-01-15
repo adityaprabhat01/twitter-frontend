@@ -20,7 +20,7 @@ import useLikedTweets from "../../hooks/useLikedTweets";
 import useAuthCookies from "../../hooks/useAuthCookies";
 import useCheckParams from "../../hooks/useCheckParams";
 import Loading from "../UI/Loading";
-
+import {db} from '../../firebase'
 const ThreadList = () => {
   const handleSelector = (state) => {
     const user_id = state.auth.user_id
@@ -48,11 +48,11 @@ const ThreadList = () => {
     })
       .then((res) => res.json())
       .then(async (res) => {
-        const db = getFirestore();
         const commentsRef = collection(db, "comments");
         const q = query(commentsRef, where("tweet_id", "==", tweet_id));
         const querySnapshot = await getDocs(q);
         res.push(querySnapshot.docs);
+        console.log(res)
         dispatch(fetchThreadSuccess(res));
         setLoading(false);
       })
@@ -81,7 +81,7 @@ const ThreadList = () => {
                 {store.comments.map((comment) => {
                   return (
                     <>
-                      <ShowComment comment={comment} />
+                      <ShowComment tweet_id={tweet_id} comment={comment} />
                       <Divider />
                     </>
                    

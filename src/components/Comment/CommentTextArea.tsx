@@ -42,7 +42,8 @@ const CommentTextArea = (props) => {
         author_name: store.name,
         author_username: store.user_name,
         comment_text: commentText,
-        rplies: [],
+        comment_id: Date.now(),
+        replies: [],
       };
       const docRef = await addDoc(collection(db, "comments"), obj);
       fetch(URL + "plusComment/" + props.props.tweet.tweet_id, {

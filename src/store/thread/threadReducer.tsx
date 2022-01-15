@@ -21,7 +21,6 @@ const threadReducer = (state = initState, action) => {
       loading: true
     }
     case FETCH_THREAD_SUCCESS: return {
-      ...state,
       tweet: action.payload[0],
       comments: action.payload[1],
       loading: false

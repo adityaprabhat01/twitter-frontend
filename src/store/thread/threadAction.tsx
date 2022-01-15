@@ -7,6 +7,7 @@ export const fetchThread = () => {
 }
 
 export const fetchThreadSuccess = (data) => {
+  console.log(data)
   return {
     type: FETCH_THREAD_SUCCESS,
     payload: data
