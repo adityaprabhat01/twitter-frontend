@@ -1,4 +1,4 @@
-import { Box, Button, Textarea } from "@chakra-ui/react";
+import { Box, Button, HStack, Textarea } from "@chakra-ui/react";
 import { collection, doc, getDocs, query, setDoc, where } from "firebase/firestore";
 
 import { useState } from "react";
@@ -50,7 +50,7 @@ const ReplyTextArea = (props) => {
         const { newObj, rec } = updateCommentObject(obj.replies[i], parentId, newReply, semaphore);
         semaphore = rec;
         obj.replies[i] = newObj
-      }      
+      }
     }
 
     return { newObj: obj, rec: semaphore };
@@ -86,15 +86,15 @@ const ReplyTextArea = (props) => {
 
   return (
     <>
-      <Box>
-        <Button onClick={handleToggle}>Reply</Button>
+      <HStack>
+        <Button height={'30px'} onClick={handleToggle}>Reply</Button>
         {toggle === true ? (
           <Box>
             <Textarea onChange={handleTextArea} />
-            <Button onClick={handleSubmit}>Submit</Button>
+            <Button height={'30px'} onClick={handleSubmit}>Submit</Button>
           </Box>
         ) : null}
-      </Box>
+      </HStack>
     </>
   );
 };

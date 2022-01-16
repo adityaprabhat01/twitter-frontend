@@ -1,3 +1,4 @@
+import { HStack } from "@chakra-ui/layout";
 import { createElement, DetailedReactHTMLElement } from "react";
 import User from "../UI/User";
 import Reply from "./Reply";
@@ -19,10 +20,10 @@ const ShowReply = (props) => {
         />
       );
       const combined = (
-        <span>
+        <HStack>
           {createElement("div", {}, obj.replies[i].comment_text)}
           <Reply comment_id={comment_id} id_firestore={id_firestore} parentId={obj.replies[i].reply_id} text={obj.replies[i].comment_text} />
-        </span>
+        </HStack>
       )
       const curr = createElement('div', {}, [
         user,
