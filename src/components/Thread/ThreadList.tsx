@@ -10,7 +10,6 @@ import Tweet from "../Tweet/Tweet";
 import ShowComment from "../Comment/ShowComment";
 import {
   collection,
-  getFirestore,
   query,
   where,
   getDocs,
@@ -52,7 +51,6 @@ const ThreadList = () => {
         const q = query(commentsRef, where("tweet_id", "==", tweet_id));
         const querySnapshot = await getDocs(q);
         res.push(querySnapshot.docs);
-        console.log(res)
         dispatch(fetchThreadSuccess(res));
         setLoading(false);
       })
@@ -64,7 +62,7 @@ const ThreadList = () => {
       controller.abort();
     };
   }, [controller, dispatch, tweet_id]);
-
+  console.log(tweet_id)
   return (
     <>
       <Center>

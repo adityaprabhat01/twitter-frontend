@@ -1,11 +1,10 @@
-import { Box } from "@chakra-ui/layout";
 import { createElement, DetailedReactHTMLElement } from "react";
 import User from "../UI/User";
 import Reply from "./Reply";
 
 const ShowReply = (props) => {
   const { replies, tweet_id, comment_id, id_firestore } = props;
-  console.log(replies)
+
   function createReplies(obj) {
     let children: DetailedReactHTMLElement<{}, HTMLElement>[] = [];
     for (let i = 0; i < obj.replies.length; i++) {
@@ -19,8 +18,6 @@ const ShowReply = (props) => {
           handleSubmit={null}
         />
       );
-      // const reply = createElement("div", {}, obj.replies[i].comment_text);
-      // const replyButton = <Reply comment_id={comment_id} id_firestore={id_firestore} parentId={obj.replies[i].reply_id} />
       const combined = (
         <span>
           {createElement("div", {}, obj.replies[i].comment_text)}
@@ -33,19 +30,20 @@ const ShowReply = (props) => {
       ])
       if (obj.replies.length === 0) continue;
       const furtherReplies = createReplies(obj.replies[i]);
-      const item = createElement("div", {}, [curr, furtherReplies]);
+      const item = createElement("div", {
+        style: {marginLeft: "40px"}
+      }, [curr, furtherReplies]);
       children.push(item);
     }
     return children;
   }
 
   const wrapper = createReplies(replies);
-  console.log(wrapper);
 
   return (
     <>
       {createElement("div", {}, wrapper)}
-      <Reply tweet_id={tweet_id} comment_id={comment_id} id_firestore={id_firestore} />
+      <Reply tweet_id={tweet_id} comment_id={comment_id} id_firestore={id_firestore} text='Reply' parentId={comment_id} />
     </>
   );
 };

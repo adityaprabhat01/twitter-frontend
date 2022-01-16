@@ -1,4 +1,4 @@
-import { FETCH_THREAD, FETCH_THREAD_FAILURE, FETCH_THREAD_SUCCESS, POST_COMMENT_THREAD } from "./threadType"
+import { FETCH_THREAD, FETCH_THREAD_FAILURE, FETCH_THREAD_SUCCESS, POST_COMMENT_THREAD, UPDATE_COMMENT_THREAD } from "./threadType"
 
 interface initStateInterface {
   tweet: object,
@@ -32,6 +32,10 @@ const threadReducer = (state = initState, action) => {
     case POST_COMMENT_THREAD: return {
       ...state,
       comments: [...(state.comments), action.payload]
+    }
+    case UPDATE_COMMENT_THREAD: return {
+      ...state,
+      comments: action.payload
     }
     default: return state
   }

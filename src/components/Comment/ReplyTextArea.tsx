@@ -1,16 +1,16 @@
 import { Box, Button, Textarea } from "@chakra-ui/react";
-import { doc, setDoc } from "firebase/firestore";
+import { collection, doc, getDocs, query, setDoc, where } from "firebase/firestore";
 
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import 'firebase/firestore'
 import {db} from '../../firebase'
+import { updateCommentThread } from "../../store/thread/threadAction";
 
 const ReplyTextArea = (props) => {
-  
-  const { tweet_id, comment_id, id_firestore, parentId, text } = props;
-  let semaphore = false;
+  console.log(props)
+  const { tweet_id, comment_id, id_firestore, parentId } = props;
   const handleSelector = (state) => {
     const user_id = state.auth.user_id;
     const name = state.auth.name;
@@ -19,6 +19,7 @@ const ReplyTextArea = (props) => {
     return { user_id, user_name, name, comments };
   };
   const store = useSelector(handleSelector);
+  const dispatch = useDispatch()
   const [toggle, setToggle] = useState(false);
   const [replyText, setReplyText] = useState("");
   function handleToggle() {
@@ -28,21 +29,33 @@ const ReplyTextArea = (props) => {
     setReplyText(event.target.value);
   }
 
-  function updateCommentObject(obj, parentId, newReply) {
-    if (obj.replies.length === 0) {
+  function updateCommentObject(obj, parentId, newReply, semaphore) {
+    
+    if (obj.comment_id === parentId) {
       obj.replies.push(newReply);
-      return obj;
+      semaphore = true
+      return { newObj: obj, rec: semaphore };
     }
+
     for (let i = 0; i < obj.replies.length; i++) {
+      console.log(obj.tweet_id, parentId, obj.reply_id)
+
       if (obj.replies[i].reply_id === parentId && !semaphore) {
-        obj.replies.push(newReply);
-        semaphore = true;
-        return obj;
+        obj.replies[i].replies.push(newReply);
+        semaphore = true
+        return { newObj: obj, rec: semaphore };
       }
-      updateCommentObject(obj.replies[i], parentId, newReply);
+      
+      if(!semaphore) {
+        const { newObj, rec } = updateCommentObject(obj.replies[i], parentId, newReply, semaphore);
+        semaphore = rec;
+        obj.replies[i] = newObj
+      }      
     }
-    return obj;
+
+    return { newObj: obj, rec: semaphore };
   }
+
 
   async function handleSubmit() {
     const newReply = {
@@ -57,10 +70,16 @@ const ReplyTextArea = (props) => {
     for(let i=0;i<store.comments.length;i++) {
       const comment = store.comments[i].data();
       if(comment.comment_id === comment_id) {
-        console.log(comment)
-        const newObj = updateCommentObject(comment, parentId, newReply)
+        const { newObj, rec } = updateCommentObject(comment, parentId, newReply, false)
         console.log(newObj)
         await setDoc(doc(db, "comments", id_firestore), newObj);
+
+        const commentsRef = collection(db, "comments");
+        const q = query(commentsRef, where("tweet_id", "==", newObj.tweet_id));
+        const querySnapshot = await getDocs(q);
+        const data = querySnapshot.docs
+        dispatch(updateCommentThread(data));
+        handleToggle()
       }
     }
   }
@@ -68,7 +87,7 @@ const ReplyTextArea = (props) => {
   return (
     <>
       <Box>
-        <Button onClick={handleToggle}>{text}</Button>
+        <Button onClick={handleToggle}>Reply</Button>
         {toggle === true ? (
           <Box>
             <Textarea onChange={handleTextArea} />

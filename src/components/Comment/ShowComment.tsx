@@ -2,7 +2,6 @@ import { Box } from "@chakra-ui/react";
 import { useHistory } from "react-router";
 import { URL } from "../../url";
 import User from "../UI/User";
-import Reply from "./Reply";
 import ShowReply from "./ShowReply";
 
 const ShowComment = (props) => {
@@ -40,7 +39,6 @@ const ShowComment = (props) => {
       <br />
       <Box>{data.comment_text}</Box>
       <ShowReply replies={data} tweet_id={tweet_id} comment_id={data.comment_id} id_firestore={comment.id} />
-      {/* <Reply tweet_id={tweet_id} comment_id={data.comment_id} id_firestore={comment.id} /> */}
     </Box>
   );
 };

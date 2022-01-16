@@ -1,5 +1,4 @@
-import { Box, Button } from "@chakra-ui/react"
-import { collection, addDoc, getFirestore } from "firebase/firestore";
+import { Box } from "@chakra-ui/react"
 import ReplyTextArea from "./ReplyTextArea";
 
 const Reply = (props) => {
