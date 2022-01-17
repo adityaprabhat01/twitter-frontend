@@ -1,5 +1,6 @@
 import { Box, Button, Flex, FormControl, FormLabel, Input } from "@chakra-ui/react";
 import { useState } from "react";
+import Error from "../UI/Error";
 
 const SignUp = () => {
 
@@ -7,6 +8,7 @@ const SignUp = () => {
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
   const [username, setUsername] = useState('');
+  const [error, setError]  = useState('')
 
   function handleEmail(event: { target: { value: React.SetStateAction<string>; }; }) {
     setEmail(event.target.value)
@@ -39,6 +41,9 @@ const SignUp = () => {
     })
     .then(res => res.json())
     .then(res => {
+      if(res.error) {
+        setError(res.error)
+      }
       console.log(res)
     })
   }
@@ -71,9 +76,11 @@ const SignUp = () => {
           <FormControl>
             <Button bg={"#A0AEC0"} onClick={handleSubmit} mt={4}>Sign Up</Button>
           </FormControl>
+          <Error message={error} />
           </Box>          
         </form>
       </Flex>
+      
     </>
   );
 };

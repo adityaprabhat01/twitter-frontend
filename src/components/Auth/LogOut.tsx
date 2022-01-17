@@ -1,4 +1,3 @@
-import { Button } from "@chakra-ui/react"
 import { useHistory } from "react-router";
 import { URL } from "../../url";
 import TwitterButton from "../UI/TwitterButton";

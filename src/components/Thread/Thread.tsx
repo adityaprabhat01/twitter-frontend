@@ -5,7 +5,6 @@ const Thread = () => {
 
   return (
     <>
-      Thread
       <ThreadList /> 
     </>
   )

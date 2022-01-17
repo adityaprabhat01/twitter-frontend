@@ -6,8 +6,6 @@ import { URL } from "../../url";
 const PostedComment = (props) => {
   const { comment } = props;
   const history = useHistory();
-
-  console.log(comment);
   function handleSubmit(event: { preventDefault: () => void }) {
     event.preventDefault();
     fetch(URL + "checkExistence/" + comment.author_username, {

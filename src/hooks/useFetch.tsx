@@ -13,57 +13,58 @@ const useFetch = (options, handlePostFetch, postData) => {
     baseURL: "http://localhost:4000",
     withCredentials: true,
   });
-  
+
   useEffect(() => {
     let unmounted = false;
-    setIsLoading(true)
-    switch(options.method) {
-      case 'GET':
-        api.get(options.pathname)
-        .then(res => {
-          if(!unmounted) {
-            setIsLoading(false)
-            if(handlePostFetch !== null) {
-              handlePostFetch(res.data)
-            }            
-            setData(res.data)
-          }
-          
-        })
-        .catch(err => {
-          setIsLoading(false);
-          setError(err);
-        })
+    setIsLoading(true);
+    switch (options.method) {
+      case "GET":
+        api
+          .get(options.pathname)
+          .then((res) => {
+            if (!unmounted) {
+              if (res.data.error) {
+                setError(res.data.error);
+              } else {
+                if (handlePostFetch !== null) {
+                  handlePostFetch(res.data);
+                }
+                setData(res.data);
+              }
+              setIsLoading(false);
+            }
+          })
+          .catch((err) => {
+            setIsLoading(false);
+            setError(err);
+          });
         break;
 
-      case 'POST':
-        api.post(options.pathname, postData)
-        .then(res => {
-          if(!unmounted) {
-            setIsLoading(false)
-            if(handlePostFetch !== null) {
-              handlePostFetch(res.data)
-            }            
-            setData(res.data)
-          }
-        })
-        .catch(err => {
-        })
+      case "POST":
+        api
+          .post(options.pathname, postData)
+          .then((res) => {
+            if (!unmounted) {
+              setIsLoading(false);
+              if (handlePostFetch !== null) {
+                handlePostFetch(res.data);
+              }
+              setData(res.data);
+            }
+          })
+          .catch((err) => {});
         break;
 
       default:
-        
     }
-    
 
     return () => {
-      unmounted = true
-      source.cancel()
-    }
-  }, [])
+      unmounted = true;
+      source.cancel();
+    };
+  }, []);
 
-  
   return [data, isLoading, error, reFetch];
-}
+};
 
-export default useFetch
+export default useFetch;
