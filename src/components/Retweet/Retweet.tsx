@@ -5,20 +5,22 @@ import {
   homeRemoveRetweetedTweets,
 } from "../../store/home/homeAction";
 import { Box, HStack } from "@chakra-ui/react";
+import { useState } from "react";
+import Error from "../UI/Error";
 
 const Retweet = (props) => {
   const handleSelector = (state) => {
-    const user_id = state.auth.user_id
-    const retweeted = state.home.retweeted
-    return { user_id, retweeted }
-  }
-  const store = useSelector(handleSelector)
+    const user_id = state.auth.user_id;
+    const retweeted = state.home.retweeted;
+    return { user_id, retweeted };
+  };
+  const store = useSelector(handleSelector);
   const dispatch = useDispatch();
 
   const { tweet } = props;
   const { tweet_id, author_id } = tweet;
   const retweetedStatus = store.retweeted;
-  
+  const [error, setError] = useState("");
 
   function handleRetweet() {
     fetch(URL + "retweet", {
@@ -35,13 +37,16 @@ const Retweet = (props) => {
     })
       .then((res) => res.json())
       .then((res) => {
-        console.log(res);
-        const { tweet_id, status } = res;
-        const obj = {
-          tweet_id,
-          liked: status,
-        };
-        dispatch(homeAddRetweetedTweets(obj));
+        if (res.error) {
+          setError(res.error);
+        } else {
+          const { tweet_id, status } = res;
+          const obj = {
+            tweet_id,
+            liked: status,
+          };
+          dispatch(homeAddRetweetedTweets(obj));
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -63,8 +68,12 @@ const Retweet = (props) => {
     })
       .then((res) => res.json())
       .then((res) => {
-        const { tweet_id } = res;
-        dispatch(homeRemoveRetweetedTweets(tweet_id));
+        if (res.error) {
+          setError(res.error);
+        } else {
+          const { tweet_id } = res;
+          dispatch(homeRemoveRetweetedTweets(tweet_id));
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -73,8 +82,8 @@ const Retweet = (props) => {
 
   return (
     <>
-    <HStack>
-      {retweetedStatus[tweet.tweet_id] === undefined ? (
+      <HStack>
+        {retweetedStatus[tweet.tweet_id] === undefined ? (
           <Box onClick={handleRetweet}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -143,10 +152,9 @@ const Retweet = (props) => {
             </svg>
           </Box>
         )}
-        <Box as='span'>
-          {0}
-        </Box>
-    </HStack>
+        <Box as="span">{0}</Box>
+      </HStack>
+      <Error message={error} />
     </>
   );
 };

@@ -4,6 +4,7 @@ import { Center, VStack } from "@chakra-ui/react";
 import useFetch from "../../hooks/useFetch";
 import useCheckParams from "../../hooks/useCheckParams";
 import Loading from "../UI/Loading";
+import Error from "../UI/Error";
 
 const FollowingList = () => {
   useAuthCookies()
@@ -17,6 +18,8 @@ const FollowingList = () => {
     null,
   );
 
+  console.log(error)
+
   return (
     <>
       <Center>
@@ -25,11 +28,12 @@ const FollowingList = () => {
           { 
             isLoading === true ? 
               <Loading /> :
+              error === '' ?
             following.map((item: any) => {
               return (
                 <UserDetails user={item} />
               )
-            })
+            }) : <Error message={error} />
           }
         </VStack>
       </Center>

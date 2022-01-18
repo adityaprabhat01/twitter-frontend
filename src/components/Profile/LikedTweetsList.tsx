@@ -7,6 +7,7 @@ import { fetchLikedSuccess } from "../../store/liked/likedAction";
 import useFetch from "../../hooks/useFetch";
 import useCheckParams from "../../hooks/useCheckParams";
 import Loading from "../UI/Loading";
+import Error from "../UI/Error";
 
 const LikedTweetList = () => {
   const handleSelector = (state) => {
@@ -43,7 +44,8 @@ const LikedTweetList = () => {
           <Loading /> : 
           <Stack border={"2px"} alignItems={"center"} maxWidth={'600px'} mt={2} mb={2}>
             Liked Tweets
-            {
+            { 
+              error === '' ?
               store.tweets.map((tweet: any) => {
                 return (
                   <>
@@ -51,7 +53,7 @@ const LikedTweetList = () => {
                     <Divider />
                   </>
                 )
-              })
+              }) : <Error message={error} />
             }
           </Stack>
         }

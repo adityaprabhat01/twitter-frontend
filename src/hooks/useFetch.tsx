@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 const useFetch = (options, handlePostFetch, postData) => {
   const [data, setData] = useState<any>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [error, setError] = useState<any>(null);
+  const [error, setError] = useState<any>('');
   const [shouldRefetch, reFetch] = useState(false);
 
   const source = axios.CancelToken.source();
@@ -45,11 +45,15 @@ const useFetch = (options, handlePostFetch, postData) => {
           .post(options.pathname, postData)
           .then((res) => {
             if (!unmounted) {
-              setIsLoading(false);
-              if (handlePostFetch !== null) {
-                handlePostFetch(res.data);
+              if (res.data.error) {
+                setError(res.data.error);
+              } else {
+                if (handlePostFetch !== null) {
+                  handlePostFetch(res.data);
+                }
+                setData(res.data);
               }
-              setData(res.data);
+              setIsLoading(false);
             }
           })
           .catch((err) => {});

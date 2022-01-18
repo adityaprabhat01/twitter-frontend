@@ -39,7 +39,6 @@ const Follow = () => {
       .then((res) => res.json())
       .then((res) => {
         if (res.error) {
-          console.log(res);
           setError(res.error);
         } else {
           dispatch(setFollowing(true));
@@ -62,7 +61,6 @@ const Follow = () => {
       .then((res) => res.json())
       .then((res) => {
         if (res.error) {
-          console.log(res);
           setError(res.error);
         } else {
           dispatch(setFollowing(false));

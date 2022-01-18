@@ -6,6 +6,7 @@ import {
 } from "../../store/home/homeAction";
 import { Box, HStack } from "@chakra-ui/react";
 import { URL } from "../../url";
+import Error from "../UI/Error";
 
 const Like = (props) => {
   const handleSelector = (state) => {
@@ -15,6 +16,7 @@ const Like = (props) => {
   }
   const store = useSelector(handleSelector)
   const dispatch = useDispatch();
+  const [error, setError] = useState('')
   
   const { tweet } = props;
   const { tweet_id, author_id } = tweet;
@@ -37,13 +39,18 @@ const Like = (props) => {
     })
       .then((res) => res.json())
       .then((res) => {
-        const { tweet_id, status } = res;
+        if(res.error) {
+          setError(res.error)
+        } else {
+          const { tweet_id, status } = res;
         const obj = {
           tweet_id,
           liked: status,
         };
         dispatch(homeAddLikedTweets(obj));
         setCount(count + 1);
+        }
+        
       })
       .catch((err) => {
         console.log(err);
@@ -65,9 +72,14 @@ const Like = (props) => {
     })
       .then((res) => res.json())
       .then((res) => {
-        const { tweet_id } = res;
+        if(res.error) {
+          setError(res.error)
+        } else {
+          const { tweet_id } = res;
         dispatch(homeRemoveLikedTweets(tweet_id));
         setCount(count - 1);
+        }
+        
       })
       .catch((err) => {
         console.log(err);
@@ -154,7 +166,7 @@ const Like = (props) => {
         
 
       </HStack>
-      
+      <Error message={error} />
     </>
   );
 };
